@@ -7,13 +7,11 @@
   "updateContentCommand": "npm install && npm run build",
   "postCreateCommand": "",
   "postAttachCommand": {
-    "server": "npm run dev"
+    "server": "cd review_manager && npm run dev"
   },
   "customizations": {
     "codespaces": {
-      "openFiles": [
-        "pages/index.js"
-      ]
+      "openFiles": ["pages/index.js"]
     }
   },
   "portsAttributes": {
