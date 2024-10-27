@@ -1,30 +1,35 @@
-import { useCallback, useEffect, useState } from 'react'
-import Button from '../components/Button'
-import ClickCount from '../components/ClickCount'
-import styles from '../styles/home.module.css'
+import { useCallback, useEffect, useState } from "react";
+import Button from "../components/Button";
+import ClickCount from "../components/ClickCount";
+import styles from "../styles/home.module.css";
+import { createClient } from "@supabase/supabase-js";
+
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_KEY;
+const supabase = createClient(supabaseUrl, supabaseKey);
 
 function throwError() {
   console.log(
     // The function body() is not defined
     document.body()
-  )
+  );
 }
 
 function Home() {
-  const [count, setCount] = useState(0)
+  const [count, setCount] = useState(0);
   const increment = useCallback(() => {
-    setCount((v) => v + 1)
-  }, [setCount])
+    setCount((v) => v + 1);
+  }, [setCount]);
 
   useEffect(() => {
     const r = setInterval(() => {
-      increment()
-    }, 1000)
+      increment();
+    }, 1000);
 
     return () => {
-      clearInterval(r)
-    }
-  }, [increment])
+      clearInterval(r);
+    };
+  }, [increment]);
 
   return (
     <main className={styles.main}>
@@ -56,8 +61,8 @@ function Home() {
         </p>
         <Button
           onClick={(e) => {
-            setTimeout(() => document.parentNode(), 0)
-            throwError()
+            setTimeout(() => document.parentNode(), 0);
+            throwError();
           }}
         >
           Throw an Error
@@ -65,7 +70,7 @@ function Home() {
       </div>
       <hr className={styles.hr} />
     </main>
-  )
+  );
 }
 
-export default Home
+export default Home;
