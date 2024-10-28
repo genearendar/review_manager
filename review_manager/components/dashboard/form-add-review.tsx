@@ -1,3 +1,5 @@
+//This component needs checking and refactoring - paste from ai
+
 import React, { useState } from 'react';
 
 type ReviewFormProps = {
