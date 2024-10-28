@@ -1,10 +1,17 @@
-import { createClient } from "@/utils/supabase/server";
-import { getAllReviews } from "@/lib/reviews";
+import { getAllReviews, addReview, Review } from "@/lib/reviews";
 import { getUserData } from "@/lib/user";
 
 export default async function Reviews() {
   const user = await getUserData();
   const reviews = await getAllReviews();
+
+  const newReview: Review = {
+    body: "This is a new review",
+    stars: 5,
+    reviewedBy: user[0].name,
+    sourceId: 1,
+    date: new Date().toISOString(),
+  };
 
   return (
     <>
