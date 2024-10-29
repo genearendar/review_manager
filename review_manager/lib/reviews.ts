@@ -65,3 +65,15 @@ export async function addReview(review: Review) {
   if (error) console.error("Insert error:", error);
   else console.log("Insert successful:", data);
 }
+
+export async function getReviewSources() {
+  const supabase = await createClient();
+  const { data, error } = await supabase
+  .from("sources")
+  .select("*")
+
+if (error) {
+  throw new Error(`Error fetching reviews: ${error.message}`);
+}
+return data;
+}
