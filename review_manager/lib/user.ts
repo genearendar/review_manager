@@ -1,5 +1,5 @@
 import { createClient } from "@/utils/supabase/server";
-import { getAuthUser } from "@/utils/supabase/auth";
+import { getAuthUser } from "@/utils/supabase/auth-actions";
 
 export async function getUserData() {
   // Fetch current authenticated user's information

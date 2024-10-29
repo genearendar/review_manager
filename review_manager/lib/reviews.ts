@@ -1,7 +1,7 @@
 "use server";
 
 import { createClient } from "@/utils/supabase/server";
-import { getAuthUser } from "@/utils/supabase/auth";
+import { getAuthUser } from "@/utils/supabase/auth-actions";
 
 export interface Review {
   body: string;
