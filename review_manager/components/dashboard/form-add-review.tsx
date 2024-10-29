@@ -1,12 +1,16 @@
-import { addReview } from "@/lib/reviews";
-import { getReviewSources } from "@/lib/reviews";
+import { Review, addReview } from "@/lib/reviews";
 
 export default function ReviewForm() {
   async function handleSubmit(formData: FormData) {
     "use server";
-    function transformToReview() {
-      console.log(formData);
-    }
+    const review: Review = {
+      body: formData.get("body") as string,
+      stars: Number(formData.get("stars")),
+      reviewedBy: formData.get("reviewedBy") as string,
+      source: formData.get("source") as string,
+      date: formData.get("date") as string,
+    };
+    await addReview(review);
   }
 
   return (
@@ -14,7 +18,7 @@ export default function ReviewForm() {
       {/* Review Text */}
       <div>
         <label htmlFor="text">Review Text:</label>
-        <textarea id="text" name="text" required />
+        <textarea id="text" name="body" required />
       </div>
 
       {/* Star Rating */}
