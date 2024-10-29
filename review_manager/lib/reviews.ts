@@ -1,6 +1,7 @@
 "use server";
 
 import { createClient } from "@/utils/supabase/server";
+import { getAuthUser } from "@/utils/supabase/auth";
 
 export interface Review {
   body: string;
@@ -24,14 +25,7 @@ export interface DatabaseReview {
 export async function getAllReviews() {
   // Fetch current authenticated user's information
   const supabase = await createClient();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
-
-  // Ensure we have a user to query by `auth_id`
-  if (!user) {
-    throw new Error("User not found");
-  }
+  const user = await getAuthUser();
 
   // Fetch reviews that match the authenticated user's `auth_id`
   const { data, error } = await supabase
@@ -47,15 +41,20 @@ export async function getAllReviews() {
 
 export async function addReview(review: Review) {
   const supabase = await createClient();
-  // Fetch current authenticated user's information
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
+  const user = await getAuthUser();
 
-  // Ensure we have a user to query by `auth_id`
-  if (!user) {
-    throw new Error("User not found.");
+  //transform Review to DatabaseReview by changing keys and adding auth_id
+  function transformToDbReview(review: Review, authId: string) {
+    return {
+      auth_id: authId,
+      body: review.body,
+      stars: review.stars,
+      reviewed_by: review.reviewedBy,
+      source_id: review.sourceId,
+      date: review.date,
+    };
   }
+
   // Prepare the review data for DB
   const reviewData: DatabaseReview = transformToDbReview(review, user.id);
 
@@ -63,19 +62,6 @@ export async function addReview(review: Review) {
   const { data, error } = await supabase
     .from("reviews")
     .insert([{ ...reviewData, auth_id: user.id }]);
-  console.log("insert data", data);
   if (error) console.error("Insert error:", error);
   else console.log("Insert successful:", data);
-}
-
-//transforms Review to DatabaseReview by changing keys and adding auth_id
-export function transformToDbReview(review: Review, authId: string) {
-  return {
-    auth_id: authId,
-    body: review.body,
-    stars: review.stars,
-    reviewed_by: review.reviewedBy,
-    source_id: review.sourceId,
-    date: review.date,
-  };
 }
