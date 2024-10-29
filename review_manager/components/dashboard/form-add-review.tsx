@@ -1,40 +1,17 @@
-//This component needs checking and refactoring - paste from ai
+import { addReview } from "@/lib/reviews";
 
-import React, { useState } from 'react';
-
-type ReviewFormProps = {
-  onSubmit: (reviewData: {
-    text: string;
-    starRating: number;
-    reviewerName?: string;
-    reviewSource?: string;
-    date?: string;
-  }) => void;
-};
-
-export default function ReviewForm({ onSubmit }: ReviewFormProps) {
-  const [text, setText] = useState('');
-  const [starRating, setStarRating] = useState(0);
-  const [reviewerName, setReviewerName] = useState('');
-  const [reviewSource, setReviewSource] = useState('');
-  const [date, setDate] = useState('');
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    onSubmit({ text, starRating, reviewerName, reviewSource, date });
-  };
+export default function ReviewForm() {
+  async function handleSubmit(formData: FormData) {
+    "use server";
+    console.log(formData);
+  }
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form action={handleSubmit}>
       {/* Review Text */}
       <div>
         <label htmlFor="text">Review Text:</label>
-        <textarea
-          id="text"
-          value={text}
-          onChange={(e) => setText(e.target.value)}
-          required
-        />
+        <textarea id="text" name="text" required />
       </div>
 
       {/* Star Rating */}
@@ -43,8 +20,7 @@ export default function ReviewForm({ onSubmit }: ReviewFormProps) {
         <input
           type="number"
           id="starRating"
-          value={starRating}
-          onChange={(e) => setStarRating(Number(e.target.value))}
+          name="stars"
           min="1"
           max="5"
           required
@@ -54,22 +30,13 @@ export default function ReviewForm({ onSubmit }: ReviewFormProps) {
       {/* Reviewer Name (Optional) */}
       <div>
         <label htmlFor="reviewerName">Reviewer Name (Optional):</label>
-        <input
-          type="text"
-          id="reviewerName"
-          value={reviewerName}
-          onChange={(e) => setReviewerName(e.target.value)}
-        />
+        <input type="text" id="reviewerName" name="reviewedBy" />
       </div>
 
       {/* Review Source (Optional Dropdown) */}
       <div>
         <label htmlFor="reviewSource">Review Source (Optional):</label>
-        <select
-          id="reviewSource"
-          value={reviewSource}
-          onChange={(e) => setReviewSource(e.target.value)}
-        >
+        <select id="reviewSource" name="source">
           <option value="">Select a source</option>
           <option value="Google">Google</option>
           <option value="Yelp">Yelp</option>
@@ -81,15 +48,10 @@ export default function ReviewForm({ onSubmit }: ReviewFormProps) {
       {/* Date (Optional) */}
       <div>
         <label htmlFor="date">Date (Optional):</label>
-        <input
-          type="date"
-          id="date"
-          value={date}
-          onChange={(e) => setDate(e.target.value)}
-        />
+        <input type="date" id="date" name="date" />
       </div>
 
       <button type="submit">Submit Review</button>
     </form>
   );
-};
+}
