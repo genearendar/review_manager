@@ -4,21 +4,27 @@ import { createClient } from "@/utils/supabase/server";
 import { getAuthUser } from "@/utils/supabase/auth-actions";
 
 export interface Review {
+  id?: number;
   body: string;
   stars: number;
-  reviewedBy?: string;
   source: string;
-  date?: string;
+  reviewedBy?: string | null;
+  date?: string | null;
+  createdAt?: string | null;
+  reviewerAvatar?: string | null;
 }
 
 export interface DatabaseReview {
   // Database type
   auth_id: string;
+  id?: number;
   body: string;
   stars: number;
-  reviewed_by?: string;
-  source_id?: number;
-  date?: string;
+  source_id: number;
+  reviewed_by?: string | null;
+  date?: string | null;
+  created_at?: string | null;
+  reviewer_avatar?: string | null;
 }
 
 // Returns all reviews of the current user

@@ -3,14 +3,22 @@ import { Review, addReview } from "@/lib/reviews";
 export default function ReviewForm() {
   async function handleSubmit(formData: FormData) {
     "use server";
+    const dateValue = formData.get("date")?.toString();
     const review: Review = {
       body: formData.get("body") as string,
       stars: Number(formData.get("stars")),
-      reviewedBy: formData.get("reviewedBy") as string,
+      reviewedBy: (formData.get("reviewedBy") as string) ?? undefined,
       source: formData.get("source") as string,
-      date: formData.get("date") as string,
+      date: dateValue !== "" ? dateValue : null,
     };
-    await addReview(review);
+    console.log(review);
+    try {
+      await addReview(review);
+      return { success: true, review };
+    } catch (error) {
+      console.error("Review submission error:", error);
+      return { success: false, error: "Failed to submit review" };
+    }
   }
 
   return (
@@ -40,10 +48,10 @@ export default function ReviewForm() {
         <input type="text" id="reviewerName" name="reviewedBy" />
       </div>
 
-      {/* Review Source (Optional Dropdown) */}
+      {/* Review Source ( Dropdown) */}
       <div>
-        <label htmlFor="reviewSource">Review Source (Optional):</label>
-        <select id="reviewSource" name="source">
+        <label htmlFor="reviewSource">Review Source:</label>
+        <select id="reviewSource" name="source" required>
           <option value="">Select a source</option>
           <option value="Google">Google</option>
           <option value="Yelp">Yelp</option>
