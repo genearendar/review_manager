@@ -1,9 +1,12 @@
 import { addReview } from "@/lib/reviews";
+import { getReviewSources } from "@/lib/reviews";
 
 export default function ReviewForm() {
   async function handleSubmit(formData: FormData) {
     "use server";
-    console.log(formData);
+    function transformToReview() {
+      console.log(formData);
+    }
   }
 
   return (

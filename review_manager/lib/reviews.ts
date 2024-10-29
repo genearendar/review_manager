@@ -7,7 +7,7 @@ export interface Review {
   body: string;
   stars: number;
   reviewedBy?: string;
-  sourceId?: number;
+  source: string;
   date?: string;
 }
 
@@ -44,19 +44,28 @@ export async function addReview(review: Review) {
   const user = await getAuthUser();
 
   //transform Review to DatabaseReview by changing keys and adding auth_id
-  function transformToDbReview(review: Review, authId: string) {
+  async function transformToDbReview(review: Review, authId: string) {
+    async function getSourceId(source: Review["source"]) {
+      const allSources = await getReviewSources();
+      const sourceId: number =
+        allSources.find((s) => s.name === source)?.id ??
+        allSources.find((s) => s.name === "Other")?.id;
+      return sourceId;
+    }
+    const sourceId = await getSourceId(review.source);
+
     return {
       auth_id: authId,
       body: review.body,
       stars: review.stars,
       reviewed_by: review.reviewedBy,
-      source_id: review.sourceId,
+      source_id: sourceId,
       date: review.date,
     };
   }
 
   // Prepare the review data for DB
-  const reviewData: DatabaseReview = transformToDbReview(review, user.id);
+  const reviewData: DatabaseReview = await transformToDbReview(review, user.id);
 
   // Add the review passed to the function to the database
   const { data, error } = await supabase
@@ -68,12 +77,10 @@ export async function addReview(review: Review) {
 
 export async function getReviewSources() {
   const supabase = await createClient();
-  const { data, error } = await supabase
-  .from("sources")
-  .select("*")
+  const { data, error } = await supabase.from("sources").select("*");
 
-if (error) {
-  throw new Error(`Error fetching reviews: ${error.message}`);
-}
-return data;
+  if (error) {
+    throw new Error(`Error fetching reviews: ${error.message}`);
+  }
+  return data;
 }

@@ -6,14 +6,6 @@ export default async function Reviews() {
   const user = await getUserData();
   const reviews = await getAllReviews();
 
-  const newReview: Review = {
-    body: "This is a new review",
-    stars: 5,
-    reviewedBy: user[0].name,
-    sourceId: 1,
-    date: new Date().toISOString(),
-  };
-
   return (
     <>
       <h2>Your user details</h2>
