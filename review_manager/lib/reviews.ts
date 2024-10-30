@@ -90,3 +90,24 @@ export async function getReviewSources() {
   }
   return data;
 }
+
+
+async function transformFromDbReview(dbReview: DatabaseReview) : Promise<Review> {
+  async function getSourceFromId(sourceId: DatabaseReview["source_id"]) {
+    const allSources = await getReviewSources();
+    const source: string =
+      allSources.find((s) => s.id === sourceId)?.source ??
+      allSources.find((s) => s.name === "Other")?.source;
+    return source;
+  }
+  const source = await getSourceFromId(dbReview.id as number);
+
+  return {
+    id: dbReview.id,
+    body: dbReview.body,
+    stars: dbReview.stars,
+    reviewedBy: dbReview.reviewed_by,
+    source: source,
+    date: dbReview.date,
+  };
+}
