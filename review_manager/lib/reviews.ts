@@ -27,7 +27,7 @@ export interface DatabaseReview {
   reviewer_avatar?: string | null;
 }
 
-// Returns all reviews of the current user
+// Return all reviews of the current user in a client safe format
 export async function getAllReviews() {
   // Fetch current authenticated user's information
   const supabase = await createClient();
@@ -42,33 +42,16 @@ export async function getAllReviews() {
   if (error) {
     throw new Error(`Error fetching reviews: ${error.message}`);
   }
-  return data;
+  const allReviews: Promise<Review>[] = data.map(
+    (r) => transformFromDbReview(r)
+  );
+  return Promise.all(allReviews);
 }
 
+//Add a review to the database
 export async function addReview(review: Review) {
   const supabase = await createClient();
   const user = await getAuthUser();
-
-  //transform Review to DatabaseReview by changing keys and adding auth_id
-  async function transformToDbReview(review: Review, authId: string) {
-    async function getSourceId(source: Review["source"]) {
-      const allSources = await getReviewSources();
-      const sourceId: number =
-        allSources.find((s) => s.name === source)?.id ??
-        allSources.find((s) => s.name === "Other")?.id;
-      return sourceId;
-    }
-    const sourceId = await getSourceId(review.source);
-
-    return {
-      auth_id: authId,
-      body: review.body,
-      stars: review.stars,
-      reviewed_by: review.reviewedBy,
-      source_id: sourceId,
-      date: review.date,
-    };
-  }
 
   // Prepare the review data for DB
   const reviewData: DatabaseReview = await transformToDbReview(review, user.id);
@@ -81,26 +64,40 @@ export async function addReview(review: Review) {
   else console.log("Insert successful:", data);
 }
 
-export async function getReviewSources() {
-  const supabase = await createClient();
-  const { data, error } = await supabase.from("sources").select("*");
-
-  if (error) {
-    throw new Error(`Error fetching reviews: ${error.message}`);
+//transform Review to DatabaseReview by changing object keys and adding auth_id
+async function transformToDbReview(review: Review, authId: string) {
+  //get source_id from sourcefor the DB
+  async function getSourceId(source: Review["source"]) {
+    const allSources = await getReviewSources();
+    const sourceId: number =
+      allSources.find((s) => s.name === source)?.id ??
+      allSources.find((s) => s.name === "Other")?.id;
+    return sourceId;
   }
-  return data;
+  const sourceId = await getSourceId(review.source);
+
+  return {
+    auth_id: authId,
+    body: review.body,
+    stars: review.stars,
+    reviewed_by: review.reviewedBy,
+    source_id: sourceId,
+    date: review.date,
+  };
 }
 
-
-async function transformFromDbReview(dbReview: DatabaseReview) : Promise<Review> {
-  async function getSourceFromId(sourceId: DatabaseReview["source_id"]) {
+//Transform DatabaseReview to Review - remove auth_id and rename object keys
+async function transformFromDbReview(
+  dbReview: DatabaseReview
+): Promise<Review> {
+  async function getSourceFromId(
+    sourceId: DatabaseReview["source_id"]
+  ): Promise<string> {
     const allSources = await getReviewSources();
-    const source: string =
-      allSources.find((s) => s.id === sourceId)?.source ??
-      allSources.find((s) => s.name === "Other")?.source;
+    const source: string = allSources.find((s) => s.id === sourceId)?.source;
     return source;
   }
-  const source = await getSourceFromId(dbReview.id as number);
+  const source = await getSourceFromId(dbReview.source_id as number);
 
   return {
     id: dbReview.id,
@@ -110,4 +107,15 @@ async function transformFromDbReview(dbReview: DatabaseReview) : Promise<Review>
     source: source,
     date: dbReview.date,
   };
+}
+
+//Get sources and their ids to the DB
+export async function getReviewSources() {
+  const supabase = await createClient();
+  const { data, error } = await supabase.from("sources").select("*");
+
+  if (error) {
+    throw new Error(`Error fetching reviews: ${error.message}`);
+  }
+  return data;
 }
