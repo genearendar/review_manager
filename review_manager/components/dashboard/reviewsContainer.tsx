@@ -1,15 +1,23 @@
-import { getAllReviews, addReview, Review } from "@/lib/reviews";
+import {
+  getAllReviews,
+  addReview,
+  Review,
+  DatabaseReview,
+  transformFromDbReview,
+} from "@/lib/reviews";
 import SingleReviewBox from "./singleReviewBox";
+import { promiseHooks } from "v8";
 
 export default async function ReviewsContainer() {
-  const reviews: Review[] = await getAllReviews();
-
+  const reviews: DatabaseReview[] = await getAllReviews();
   if (!reviews) {
     return <div>No reviews</div>;
   }
-
-  const reviewComponents = reviews.map((review: Review) => (
-    <SingleReviewBox key={review.id} review={review} />   
-  ))
-  return <div>{JSON.stringify(reviews, null, 2)}</div>;
+  const reviewComponents = await Promise.all(
+    reviews.map(async (dbReview: DatabaseReview) => {
+      const review = await transformFromDbReview(dbReview);
+      return <SingleReviewBox key={dbReview.id} review={review} />;
+    })
+  );
+  return <div>{reviewComponents}</div>;
 }

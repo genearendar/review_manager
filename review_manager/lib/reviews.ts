@@ -43,10 +43,10 @@ export async function getAllReviews() {
   if (error) {
     throw new Error(`Error fetching reviews: ${error.message}`);
   }
-  const allReviews: Promise<Review>[] = data.map((r) =>
-    transformFromDbReview(r)
-  );
-  return Promise.all(allReviews);
+  // const allReviews: Promise<Review>[] = data.map((r) =>
+  //   transformFromDbReview(r)
+  // );
+  return data;
 }
 
 //Add a review to the database
@@ -67,7 +67,7 @@ export async function addReview(review: Review) {
 
 //transform Review to DatabaseReview by changing object keys and adding auth_id
 async function transformToDbReview(review: Review, authId: string) {
-  //get source_id from sourcefor the DB
+  //get source_id from source for the DB
   async function getSourceId(source: Review["source"]) {
     const allSources = await getReviewSources();
     const sourceId: number =
@@ -88,7 +88,7 @@ async function transformToDbReview(review: Review, authId: string) {
 }
 
 //Transform DatabaseReview to Review - remove auth_id and rename object keys
-async function transformFromDbReview(
+export async function transformFromDbReview(
   dbReview: DatabaseReview
 ): Promise<Review> {
   return {
