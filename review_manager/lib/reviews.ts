@@ -21,6 +21,7 @@ export interface DatabaseReview {
   body: string;
   stars: number;
   source_id: number;
+  sources?: { name: string };
   reviewed_by?: string | null;
   date?: string | null;
   created_at?: string | null;
@@ -36,14 +37,14 @@ export async function getAllReviews() {
   // Fetch reviews that match the authenticated user's `auth_id`
   const { data, error } = await supabase
     .from("reviews")
-    .select("*")
+    .select("*, sources(name)")
     .eq("auth_id", user.id);
 
   if (error) {
     throw new Error(`Error fetching reviews: ${error.message}`);
   }
-  const allReviews: Promise<Review>[] = data.map(
-    (r) => transformFromDbReview(r)
+  const allReviews: Promise<Review>[] = data.map((r) =>
+    transformFromDbReview(r)
   );
   return Promise.all(allReviews);
 }
@@ -90,21 +91,12 @@ async function transformToDbReview(review: Review, authId: string) {
 async function transformFromDbReview(
   dbReview: DatabaseReview
 ): Promise<Review> {
-  async function getSourceFromId(
-    sourceId: DatabaseReview["source_id"]
-  ): Promise<string> {
-    const allSources = await getReviewSources();
-    const source: string = allSources.find((s) => s.id === sourceId)?.source;
-    return source;
-  }
-  const source = await getSourceFromId(dbReview.source_id as number);
-
   return {
     id: dbReview.id,
     body: dbReview.body,
     stars: dbReview.stars,
     reviewedBy: dbReview.reviewed_by,
-    source: source,
+    source: dbReview.sources?.name as string,
     date: dbReview.date,
   };
 }
