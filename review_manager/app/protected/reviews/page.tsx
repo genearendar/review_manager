@@ -1,6 +1,7 @@
 import { getAllReviews, addReview, Review } from "@/lib/reviews";
 import { getUserData } from "@/lib/user";
 import ReviewForm from "@/components/dashboard/form-add-review";
+import ReviewsContainer from "@/components/dashboard/reviewsContainer";
 
 export default async function Reviews() {
   const user = await getUserData();
@@ -11,7 +12,7 @@ export default async function Reviews() {
       <h2>Your user details</h2>
       <div>{JSON.stringify(user, null, 2)}</div>
       <h2>Reviews</h2>
-      <div>{JSON.stringify(reviews, null, 2)}</div>
+      <ReviewsContainer />
       <h2>Add a new review</h2>
       <ReviewForm />
     </>
