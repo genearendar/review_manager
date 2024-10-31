@@ -2,34 +2,11 @@
 
 import { createClient } from "@/utils/supabase/server";
 import { getAuthUser } from "@/utils/supabase/auth-actions";
-
-export interface Review {
-  id?: number;
-  body: string;
-  stars: number;
-  source: string;
-  reviewedBy?: string | null;
-  date?: string | null;
-  createdAt?: string | null;
-  reviewerAvatar?: string | null;
-}
-
-export interface DatabaseReview {
-  // Database type
-  auth_id: string;
-  id?: number;
-  body: string;
-  stars: number;
-  source_id: number;
-  sources?: { name: string };
-  reviewed_by?: string | null;
-  date?: string | null;
-  created_at?: string | null;
-  reviewer_avatar?: string | null;
-}
+import { Review, DatabaseReview, FetchedReview } from "@/app/protected/reviews/reviewUtils";
+import { transformFromDbReview } from "@/app/protected/reviews/reviewUtils";
 
 // Return all reviews of the current user in a client safe format
-export async function getAllReviews() {
+export async function getAllReviews(): Promise<Review[]> {
   // Fetch current authenticated user's information
   const supabase = await createClient();
   const user = await getAuthUser();
@@ -37,16 +14,16 @@ export async function getAllReviews() {
   // Fetch reviews that match the authenticated user's `auth_id`
   const { data, error } = await supabase
     .from("reviews")
-    .select("*, sources(name)")
-    .eq("auth_id", user.id);
+    .select("id, body, stars, reviewed_by, date, created_at, reviewer_avatar, sources(name)")
+    .eq("auth_id", user.id)
+    .returns<FetchedReview[]>();
 
   if (error) {
     throw new Error(`Error fetching reviews: ${error.message}`);
   }
-  // const allReviews: Promise<Review>[] = data.map((r) =>
-  //   transformFromDbReview(r)
-  // );
-  return data;
+  const allReviews: Review[] = data.map((r) =>
+    transformFromDbReview(r));
+  return allReviews;
 }
 
 //Add a review to the database
@@ -84,20 +61,6 @@ async function transformToDbReview(review: Review, authId: string) {
     reviewed_by: review.reviewedBy,
     source_id: sourceId,
     date: review.date,
-  };
-}
-
-//Transform DatabaseReview to Review - remove auth_id and rename object keys
-export async function transformFromDbReview(
-  dbReview: DatabaseReview
-): Promise<Review> {
-  return {
-    id: dbReview.id,
-    body: dbReview.body,
-    stars: dbReview.stars,
-    reviewedBy: dbReview.reviewed_by,
-    source: dbReview.sources?.name as string,
-    date: dbReview.date,
   };
 }
 

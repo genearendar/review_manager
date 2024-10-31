@@ -1,12 +1,13 @@
-'use client';
-import { Review } from "@/lib/reviews";
-export default function SingleReviewBox({review}: {review: Review}) {
+"use client";
+import { Review } from "@/lib/reviewActions";
+export default function SingleReviewBox({ review }: { review: Review }) {
   return (
-  <div>
-    <h3>{review.body}</h3>
-    <p>Stars: {review.stars}</p>
-    <p>Reviewed by: {review.reviewedBy}</p>
-    <p>Source: {review.source}</p>
-    <p>Date: {review.date}</p>
-  </div>);
+    <div>
+      <h3>{review.body}</h3>
+      <p>Stars: {review.stars}</p>
+      <p>Reviewed by: {review.reviewedBy}</p>
+      <p>Source: {review.source}</p>
+      <p>Date: {review.date}</p>
+    </div>
+  );
 }

@@ -1,4 +1,4 @@
-import { Review, addReview } from "@/lib/reviews";
+import { Review, addReview } from "@/lib/reviewActions";
 
 export default function ReviewForm() {
   async function handleSubmit(formData: FormData) {
