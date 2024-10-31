@@ -12,10 +12,9 @@ export default async function Reviews() {
     <>
       <h2>Your user details</h2>
       <div>{JSON.stringify(user, null, 2)}</div>
-      <h2>Reviews</h2>
-      <ReviewsContainer initialReviews={initialReviews} />
-      <h2>Add a new review</h2>
       <ReviewForm />
+      <ReviewsContainer initialReviews={initialReviews} />
+
     </>
   );
 }

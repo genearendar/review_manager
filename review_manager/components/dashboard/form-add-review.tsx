@@ -1,6 +1,9 @@
-import { Review, addReview } from "@/lib/reviewActions";
+import { addReview } from "@/lib/reviewActions";
+import { Review } from "@/app/protected/reviews/reviewUtils";
+import { revalidatePath } from "next/cache";
 
-export default function ReviewForm() {
+export default async function ReviewForm() {
+
   async function handleSubmit(formData: FormData) {
     "use server";
     const dateValue = formData.get("date")?.toString();
@@ -11,9 +14,9 @@ export default function ReviewForm() {
       source: formData.get("source") as string,
       date: dateValue !== "" ? dateValue : null,
     };
-    console.log(review);
     try {
       await addReview(review);
+      revalidatePath("/protected/reviews");
       return { success: true, review };
     } catch (error) {
       console.error("Review submission error:", error);

@@ -1,5 +1,4 @@
-"use client";
-import { Review } from "@/lib/reviewActions";
+import { Review } from "@/app/protected/reviews/reviewUtils";
 export default function SingleReviewBox({ review }: { review: Review }) {
   return (
     <div>
