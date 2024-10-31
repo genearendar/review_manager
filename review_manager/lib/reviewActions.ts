@@ -4,6 +4,7 @@ import { createClient } from "@/utils/supabase/server";
 import { getAuthUser } from "@/utils/supabase/auth-actions";
 import { Review, DatabaseReview, FetchedReview } from "@/app/protected/reviews/reviewUtils";
 import { transformFromDbReview } from "@/app/protected/reviews/reviewUtils";
+import { revalidatePath } from "next/cache";
 
 // Return all reviews of the current user in a client safe format
 export async function getAllReviews(): Promise<Review[]> {
@@ -73,4 +74,16 @@ export async function getReviewSources() {
     throw new Error(`Error fetching reviews: ${error.message}`);
   }
   return data;
+}
+
+export async function deleteReview(id: number) {
+  'use server';
+  const supabase = await createClient();
+  const { data, error } = await supabase
+    .from("reviews")
+    .delete()
+    .match({ id });
+  revalidatePath("/protected/reviews");
+  if (error) console.error("Delete error:", error);
+  else console.log("Delete successful:", data);
 }
