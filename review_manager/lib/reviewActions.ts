@@ -2,7 +2,11 @@
 
 import { createClient } from "@/utils/supabase/server";
 import { getAuthUser } from "@/utils/supabase/auth-actions";
-import { Review, DatabaseReview, FetchedReview } from "@/app/protected/reviews/reviewUtils";
+import {
+  Review,
+  DatabaseReview,
+  FetchedReview,
+} from "@/app/protected/reviews/reviewUtils";
 import { transformFromDbReview } from "@/app/protected/reviews/reviewUtils";
 import { revalidatePath } from "next/cache";
 
@@ -15,15 +19,16 @@ export async function getAllReviews(): Promise<Review[]> {
   // Fetch reviews that match the authenticated user's `auth_id`
   const { data, error } = await supabase
     .from("reviews")
-    .select("id, body, stars, reviewed_by, date, created_at, reviewer_avatar, sources(name)")
+    .select(
+      "id, body, stars, reviewed_by, date, created_at, reviewer_avatar, sources(name)"
+    )
     .eq("auth_id", user.id)
     .returns<FetchedReview[]>();
 
   if (error) {
     throw new Error(`Error fetching reviews: ${error.message}`);
   }
-  const allReviews: Review[] = data.map((r) =>
-    transformFromDbReview(r));
+  const allReviews: Review[] = data.map((r) => transformFromDbReview(r));
   return allReviews;
 }
 
@@ -41,6 +46,7 @@ export async function addReview(review: Review) {
     .insert([{ ...reviewData, auth_id: user.id }]);
   if (error) console.error("Insert error:", error);
   else console.log("Insert successful:", data);
+  revalidatePath("/protected/reviews");
 }
 
 //transform Review to DatabaseReview by changing object keys and adding auth_id
@@ -77,12 +83,9 @@ export async function getReviewSources() {
 }
 
 export async function deleteReview(id: number) {
-  'use server';
+  "use server";
   const supabase = await createClient();
-  const { data, error } = await supabase
-    .from("reviews")
-    .delete()
-    .match({ id });
+  const { data, error } = await supabase.from("reviews").delete().match({ id });
   revalidatePath("/protected/reviews");
   if (error) console.error("Delete error:", error);
   else console.log("Delete successful:", data);

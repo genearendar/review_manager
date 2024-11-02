@@ -17,9 +17,7 @@ export default function ReviewsContainer({
   });
   return (
     <>
-      <NewReview>
-        <ReviewForm />
-      </NewReview>
+      <NewReview />
       <h2>Reviews</h2>
       {reviewComponents}
     </>

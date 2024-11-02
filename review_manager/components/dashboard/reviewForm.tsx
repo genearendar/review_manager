@@ -2,8 +2,7 @@ import { addReview } from "@/lib/reviewActions";
 import { Review } from "@/app/protected/reviews/reviewUtils";
 import { revalidatePath } from "next/cache";
 
-export default function ReviewForm() {
-
+export default function ReviewForm({ toggle }: { toggle: () => void }) {
   async function handleSubmit(formData: FormData) {
     const dateValue = formData.get("date")?.toString();
     const review: Review = {
@@ -15,7 +14,7 @@ export default function ReviewForm() {
     };
     try {
       await addReview(review);
-      revalidatePath("/protected/reviews");
+      toggle();
       return { success: true, review };
     } catch (error) {
       console.error("Review submission error:", error);
