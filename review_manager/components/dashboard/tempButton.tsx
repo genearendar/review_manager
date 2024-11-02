@@ -1,12 +1,10 @@
 "use client";
 export default function TempButton({
   children,
-  id,
   action,
 }: {
   children: React.ReactNode;
-  id: number;
-  action: (id: number) => void;
+  action: () => void;
 }) {
-  return <button onClick={() => action(id)}>{children}</button>;
+  return <button onClick={action}>{children}</button>;
 }
