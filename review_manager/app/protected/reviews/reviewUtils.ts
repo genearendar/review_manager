@@ -1,6 +1,6 @@
 
 export interface Review {
-  id: number;
+  id?: number;
   body: string;
   stars: number;
   source: string;

@@ -14,7 +14,7 @@ export default function SingleReviewBox({ review }: { review: Review }) {
         <p>Date: {review.date}</p>
       </div>
       <div>
-      <TempButton action={deleteReview.bind(null, review.id)}>
+      <TempButton action={deleteReview} id={review.id!}>
         Delete
       </TempButton>
       </div>
