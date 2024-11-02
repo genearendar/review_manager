@@ -2,10 +2,9 @@ import { addReview } from "@/lib/reviewActions";
 import { Review } from "@/app/protected/reviews/reviewUtils";
 import { revalidatePath } from "next/cache";
 
-export default async function ReviewForm() {
+export default function ReviewForm() {
 
   async function handleSubmit(formData: FormData) {
-    "use server";
     const dateValue = formData.get("date")?.toString();
     const review: Review = {
       body: formData.get("body") as string,
