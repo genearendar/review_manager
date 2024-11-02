@@ -2,7 +2,6 @@ import { Review } from "@/app/protected/reviews/reviewUtils";
 import TempButton from "./tempButton";
 import { deleteReview } from "@/lib/reviewActions";
 
-// import { deleteReview } from "@/lib/reviewActions";
 export default function SingleReviewBox({ review }: { review: Review }) {
   return (
     <>

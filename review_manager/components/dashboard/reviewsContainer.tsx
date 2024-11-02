@@ -1,7 +1,7 @@
-// "use client";
 import { Review } from "@/app/protected/reviews/reviewUtils";
-import { useState } from "react";
 import SingleReviewBox from "./singleReviewBox";
+import NewReview from "./newReview";
+import ReviewForm from "./reviewForm";
 
 export default function ReviewsContainer({
   initialReviews,
@@ -17,8 +17,11 @@ export default function ReviewsContainer({
   });
   return (
     <>
-    <h2>Reviews</h2>
-    {reviewComponents}
+      <NewReview>
+        <ReviewForm />
+      </NewReview>
+      <h2>Reviews</h2>
+      {reviewComponents}
     </>
   );
 }
