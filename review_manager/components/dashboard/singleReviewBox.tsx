@@ -17,10 +17,10 @@ export default function SingleReviewBox({ review }: { review: Review }) {
         <TableCell>{review.source}</TableCell>
         <TableCell className="flex gap-2">
           <TempButton action={deleteReview.bind(null, review.id!)}>
-            <Pencil size={16} />
+            <Pencil size={16} className="text-gray-600 hover:text-black" />
           </TempButton>
           <TempButton action={deleteReview.bind(null, review.id!)}>
-            <X size={16} />
+            <X size={16} className="text-gray-600 hover:text-black" />
           </TempButton>
         </TableCell>
       </TableRow>

@@ -25,14 +25,29 @@ export default function ReviewForm({ toggle }: { toggle: () => void }) {
   return (
     <form action={handleSubmit}>
       {/* Review Text */}
-      <div>
-        <label htmlFor="text">Review Text:</label>
-        <textarea id="text" name="body" required />
+      <div className="py-2">
+        <label
+          htmlFor="text"
+          className="block text-sm font-medium text-gray-700"
+        >
+          Review Text:
+        </label>
+        <textarea
+          id="text"
+          name="body"
+          required
+          className="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+        />
       </div>
 
       {/* Star Rating */}
-      <div>
-        <label htmlFor="starRating">Star Rating (1-5):</label>
+      <div className="py-2">
+        <label
+          htmlFor="starRating"
+          className="block text-sm font-medium text-gray-700"
+        >
+          Star Rating (1-5):
+        </label>
         <input
           type="number"
           id="starRating"
@@ -40,19 +55,35 @@ export default function ReviewForm({ toggle }: { toggle: () => void }) {
           min="1"
           max="5"
           required
+          className="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
         />
       </div>
 
       {/* Reviewer Name (Optional) */}
-      <div>
-        <label htmlFor="reviewerName">Reviewer Name (Optional):</label>
-        <input type="text" id="reviewerName" name="reviewedBy" />
+      <div className="py-2">
+        <label
+          htmlFor="reviewerName"
+          className="block text-sm font-medium text-gray-700"
+        >
+          Reviewer Name (Optional):
+        </label>
+        <input
+          type="text"
+          id="reviewerName"
+          name="reviewedBy"
+          className="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+        />
       </div>
 
       {/* Review Source ( Dropdown) */}
-      <div>
-        <label htmlFor="reviewSource">Review Source:</label>
-        <select id="reviewSource" name="source" required>
+      <div className="py-2">
+        <label
+          htmlFor="reviewSource"
+          className="block text-sm font-medium text-gray-700"
+        >
+          Review Source:
+        </label>
+        <select id="reviewSource" name="source" required className="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
           <option value="">Select a source</option>
           <option value="Google">Google</option>
           <option value="Yelp">Yelp</option>
@@ -62,12 +93,22 @@ export default function ReviewForm({ toggle }: { toggle: () => void }) {
       </div>
 
       {/* Date (Optional) */}
-      <div>
-        <label htmlFor="date">Date (Optional):</label>
-        <input type="date" id="date" name="date" />
+      <div className="py-2">
+        <label
+          htmlFor="date"
+          className="block text-sm font-medium text-gray-700"
+        >
+          Date (Optional):
+        </label>
+        <input type="date" id="date" name="date" className="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"/>
       </div>
 
-      <button type="submit">Submit Review</button>
+      <button
+        type="submit"
+        className="px-4 py-2 mt-4 bg-blue-500 text-white rounded hover:bg-blue-600 transition-colors"
+      >
+        Submit Review
+      </button>
     </form>
   );
 }
