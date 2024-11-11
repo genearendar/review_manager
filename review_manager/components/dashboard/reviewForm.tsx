@@ -1,5 +1,5 @@
 import { addReview } from "@/lib/reviewActions";
-import { Review } from "@/app/(protected)/reviews/reviewUtils";
+import { Review } from "@/app/dashboard/reviews/reviewUtils";
 import { revalidatePath } from "next/cache";
 
 export default function ReviewForm({ toggle }: { toggle: () => void }) {

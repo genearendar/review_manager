@@ -1,4 +1,4 @@
-import { Review } from "@/app/(protected)/reviews/reviewUtils";
+import { Review } from "@/app/dashboard/reviews/reviewUtils";
 import TempButton from "./tempButton";
 import { deleteReview } from "@/lib/reviewActions";
 import { TableRow } from "@/components/ui/table";

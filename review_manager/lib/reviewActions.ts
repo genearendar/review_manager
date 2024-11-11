@@ -6,8 +6,8 @@ import {
   Review,
   DatabaseReview,
   FetchedReview,
-} from "@/app/(protected)/reviews/reviewUtils";
-import { transformFromDbReview } from "@/app/(protected)/reviews/reviewUtils";
+} from "@/app/dashboard/reviews/reviewUtils";
+import { transformFromDbReview } from "@/app/dashboard/reviews/reviewUtils";
 import { revalidatePath } from "next/cache";
 
 // Return all reviews of the current user in a client safe format
@@ -46,7 +46,7 @@ export async function addReview(review: Review) {
     .insert([{ ...reviewData, auth_id: user.id }]);
   if (error) console.error("Insert error:", error);
   else console.log("Insert successful:", data);
-  revalidatePath("/protected/reviews");
+  revalidatePath("/dashboard/reviews");
 }
 
 //transform Review to DatabaseReview by changing object keys and adding auth_id
@@ -86,7 +86,7 @@ export async function deleteReview(id: number) {
   "use server";
   const supabase = await createClient();
   const { data, error } = await supabase.from("reviews").delete().match({ id });
-  revalidatePath("/protected/reviews");
+  revalidatePath("/dashboard/reviews");
   if (error) console.error("Delete error:", error);
   else console.log("Delete successful:", data);
 }
