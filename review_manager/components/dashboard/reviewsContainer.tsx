@@ -1,7 +1,7 @@
 import { Review } from "@/app/protected/reviews/reviewUtils";
 import SingleReviewBox from "./singleReviewBox";
 import NewReview from "./newReview";
-import ReviewForm from "./reviewForm";
+import ReviewTable from "./reviewTable";
 
 export default function ReviewsContainer({
   initialReviews,
@@ -19,7 +19,7 @@ export default function ReviewsContainer({
     <>
       <NewReview />
       <h2>Reviews</h2>
-      {reviewComponents}
+      <ReviewTable>{reviewComponents}</ReviewTable>
     </>
   );
 }

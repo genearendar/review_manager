@@ -1,7 +1,7 @@
 import { createClient } from "@/utils/supabase/server";
 import { redirect } from "next/navigation";
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
-import { AppSidebar } from "@/components/dashboard/app-sidebar";
+import { AppSidebar } from "@/components/dashboard/appSidebar";
 
 export default async function ProtectedPage({
   children,
