@@ -1,5 +1,5 @@
 import { addReview } from "@/lib/reviewActions";
-import { Review } from "@/app/protected/reviews/reviewUtils";
+import { Review } from "@/app/(protected)/reviews/reviewUtils";
 import { revalidatePath } from "next/cache";
 
 export default function ReviewForm({ toggle }: { toggle: () => void }) {
@@ -83,7 +83,12 @@ export default function ReviewForm({ toggle }: { toggle: () => void }) {
         >
           Review Source:
         </label>
-        <select id="reviewSource" name="source" required className="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
+        <select
+          id="reviewSource"
+          name="source"
+          required
+          className="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+        >
           <option value="">Select a source</option>
           <option value="Google">Google</option>
           <option value="Yelp">Yelp</option>
@@ -100,7 +105,12 @@ export default function ReviewForm({ toggle }: { toggle: () => void }) {
         >
           Date (Optional):
         </label>
-        <input type="date" id="date" name="date" className="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"/>
+        <input
+          type="date"
+          id="date"
+          name="date"
+          className="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+        />
       </div>
 
       <button

@@ -1,4 +1,4 @@
-import { Review } from "@/app/protected/reviews/reviewUtils";
+import { Review } from "@/app/(protected)/reviews/reviewUtils";
 import SingleReviewBox from "./singleReviewBox";
 import NewReview from "./newReview";
 import ReviewTable from "./reviewTable";
