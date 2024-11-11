@@ -1,4 +1,4 @@
-import { Calendar, Home, Inbox, Search, Settings } from "lucide-react";
+import { User, MessageSquareCode, Star } from "lucide-react";
 
 import {
   Sidebar,
@@ -14,29 +14,19 @@ import {
 // Menu items.
 const items = [
   {
-    title: "Home",
-    url: "#",
-    icon: Home,
+    title: "Reviews",
+    url: "reviews",
+    icon: Star,
   },
   {
-    title: "Inbox",
-    url: "#",
-    icon: Inbox,
+    title: "Widgets",
+    url: "widgets",
+    icon: MessageSquareCode,
   },
   {
-    title: "Calendar",
-    url: "#",
-    icon: Calendar,
-  },
-  {
-    title: "Search",
-    url: "#",
-    icon: Search,
-  },
-  {
-    title: "Settings",
-    url: "#",
-    icon: Settings,
+    title: "Account",
+    url: "account",
+    icon: User,
   },
 ];
 
