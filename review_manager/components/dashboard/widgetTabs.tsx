@@ -1,6 +1,11 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Widget } from "@/app/dashboard/dashboardUtils";
 
-export default function WidgetTabs({ initialWidgets }) {
+export default function WidgetTabs({
+  initialWidgets,
+}: {
+  initialWidgets: Widget[];
+}) {
   return (
     <Tabs defaultValue="Your widgets">
       <TabsList>
