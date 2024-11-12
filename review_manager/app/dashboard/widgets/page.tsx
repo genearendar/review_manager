@@ -1,12 +1,13 @@
-import { getUserData } from "@/lib/userActions";
+import { getAllWidgets } from "@/lib/widgetActions";
+import WidgetTabs from "@/components/dashboard/widgetTabs";
 
 export default async function Account() {
-  const user = await getUserData();
+  const widgets = await getAllWidgets();
 
   return (
     <>
-      <h2>Your user details</h2>
-      <div>{JSON.stringify(user, null, 2)}</div>
+      <h2>Your widgets</h2>
+      <WidgetTabs initialWidgets={widgets} />
     </>
   );
 }

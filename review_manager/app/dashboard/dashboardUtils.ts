@@ -1,4 +1,3 @@
-
 export interface Review {
   id?: number;
   body: string;
@@ -35,10 +34,24 @@ export interface FetchedReview {
   reviewer_avatar: string | null;
 }
 
+export interface Widget {
+  id?: number;
+  name: string;
+  reviews: Review[] | null;
+}
+
+export interface FetchedWidget {
+  id: number;
+  name: string;
+  grouped: {
+    reviews: {
+      id: number;
+    }[];
+  }[];
+}
+
 //Transform DatabaseReview to Review - remove auth_id and rename object keys
-export function transformFromDbReview(
-  dbReview: FetchedReview
-): Review {
+export function transformFromDbReview(dbReview: FetchedReview): Review {
   return {
     id: dbReview.id,
     body: dbReview.body,

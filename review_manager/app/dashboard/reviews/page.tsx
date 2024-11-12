@@ -1,5 +1,5 @@
 import { getAllReviews, addReview } from "@/lib/reviewActions";
-import { Review } from "@/app/dashboard/reviews/reviewUtils";
+import { Review } from "@/app/dashboard/dashboardUtils";
 import { getUserData } from "@/lib/userActions";
 import ReviewForm from "@/components/dashboard/reviewForm";
 import ReviewsContainer from "@/components/dashboard/reviewsContainer";

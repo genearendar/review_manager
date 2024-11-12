@@ -6,8 +6,8 @@ import {
   Review,
   DatabaseReview,
   FetchedReview,
-} from "@/app/dashboard/reviews/reviewUtils";
-import { transformFromDbReview } from "@/app/dashboard/reviews/reviewUtils";
+} from "@/app/dashboard/dashboardUtils";
+import { transformFromDbReview } from "@/app/dashboard/dashboardUtils";
 import { revalidatePath } from "next/cache";
 
 // Return all reviews of the current user in a client safe format
