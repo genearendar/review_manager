@@ -1,27 +1,21 @@
+"use client";
 import { addReview } from "@/lib/reviewActions";
-import { Review } from "@/app/dashboard/dashboardUtils";
-import { revalidatePath } from "next/cache";
+import { useState } from "react";
+import ButtonFormSubmit from "./buttonFormSubmit";
 
 export default function ReviewForm({ toggle }: { toggle: () => void }) {
+  const [disabled, setDisabled] = useState(false);
   async function handleSubmit(formData: FormData) {
-    const dateValue = formData.get("date")?.toString();
-    const review: Review = {
-      body: formData.get("body") as string,
-      stars: Number(formData.get("stars")),
-      reviewedBy: (formData.get("reviewedBy") as string) ?? undefined,
-      source: formData.get("source") as string,
-      date: dateValue !== "" ? dateValue : null,
-    };
+    setDisabled(true);
     try {
-      await addReview(review);
+      await addReview(formData); // Call the server action
       toggle();
-      return { success: true, review };
     } catch (error) {
-      console.error("Review submission error:", error);
-      return { success: false, error: "Failed to submit review" };
+      console.error("Error adding review:", error);
+    } finally {
+      setDisabled(false);
     }
   }
-
   return (
     <form action={handleSubmit}>
       {/* Review Text */}
@@ -112,13 +106,9 @@ export default function ReviewForm({ toggle }: { toggle: () => void }) {
           className="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
         />
       </div>
-
-      <button
-        type="submit"
-        className="px-4 py-2 mt-4 bg-blue-500 text-white rounded hover:bg-blue-600 transition-colors"
-      >
-        Submit Review
-      </button>
+      <ButtonFormSubmit className="px-4 py-2 mt-4 bg-blue-500 text-white rounded hover:bg-blue-600 transition-colors disabled:opacity-50 disabled:hover:bg-blue-500">
+        Add review
+      </ButtonFormSubmit>
     </form>
   );
 }

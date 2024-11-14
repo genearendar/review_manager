@@ -2,15 +2,15 @@
 import ReviewForm from "./reviewForm";
 import TempButton from "./tempButton";
 import ReviewModal from "./reviewModal";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { SquarePlus } from "lucide-react";
 
 export default function NewReview() {
   const [formToggle, setFormToggle] = useState(false);
   function toggleForm() {
+    console.log("Toggle running");
     setFormToggle((prevToggle) => !prevToggle);
   }
-
   return (
     <>
       {!formToggle && (
@@ -22,7 +22,7 @@ export default function NewReview() {
       )}
       {/* {formToggle && <ReviewForm toggle={toggleForm} />} */}
       {formToggle && (
-        <ReviewModal isOpen={formToggle} setIsOpen={setFormToggle}>
+        <ReviewModal isOpen={formToggle} setIsOpen={toggleForm}>
           <ReviewForm toggle={toggleForm} />
         </ReviewModal>
       )}

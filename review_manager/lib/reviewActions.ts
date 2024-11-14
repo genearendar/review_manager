@@ -33,9 +33,18 @@ export async function getAllReviews(): Promise<Review[]> {
 }
 
 //Add a review to the database
-export async function addReview(review: Review) {
+export async function addReview(formData: FormData) {
   const supabase = await createClient();
   const user = await getAuthUser();
+
+  const dateValue = formData.get("date")?.toString();
+  const review: Review = {
+    body: formData.get("body") as string,
+    stars: Number(formData.get("stars")),
+    reviewedBy: (formData.get("reviewedBy") as string) ?? undefined,
+    source: formData.get("source") as string,
+    date: dateValue !== "" ? dateValue : null,
+  };
 
   // Prepare the review data for DB
   const reviewData: DatabaseReview = await transformToDbReview(review, user.id);

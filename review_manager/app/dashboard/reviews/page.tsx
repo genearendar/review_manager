@@ -7,7 +7,6 @@ import ReviewsContainer from "@/components/dashboard/reviewsContainer";
 export default async function Reviews() {
   const user = await getUserData();
   const initialReviews: Review[] = await getAllReviews();
-  console.log(user);
 
   return (
     <>
