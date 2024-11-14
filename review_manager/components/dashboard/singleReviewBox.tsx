@@ -1,5 +1,6 @@
 import { Review } from "@/app/dashboard/dashboardUtils";
 import TempButton from "./tempButton";
+import ButtonForm from "./buttonForm";
 import { deleteReview } from "@/lib/reviewActions";
 import { TableRow } from "@/components/ui/table";
 import { TableCell } from "@/components/ui/table";
@@ -19,9 +20,11 @@ export default function SingleReviewBox({ review }: { review: Review }) {
           <TempButton action={deleteReview.bind(null, review.id!)}>
             <Pencil size={16} className="text-gray-600 hover:text-black" />
           </TempButton>
-          <TempButton action={deleteReview.bind(null, review.id!)}>
-            <X size={16} className="text-gray-600 hover:text-black" />
-          </TempButton>
+          <ButtonForm action={deleteReview} args={review.id!}>
+            <button>
+              <X size={16} className="text-gray-600 hover:text-black" />
+            </button>
+          </ButtonForm>
         </TableCell>
       </TableRow>
     </>
