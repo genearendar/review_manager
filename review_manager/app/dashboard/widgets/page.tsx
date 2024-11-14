@@ -6,7 +6,7 @@ export default async function Account() {
 
   return (
     <>
-      <h2>Your widgets</h2>
+      <h2 className="text-4xl mb-4">Your widgets</h2>
       <WidgetTabs initialWidgets={widgets} />
     </>
   );

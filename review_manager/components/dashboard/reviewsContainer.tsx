@@ -16,7 +16,7 @@ export default function ReviewsContainer({
     return <SingleReviewBox key={review.id} review={review} />;
   });
   return (
-    <div className="px-5">
+    <div>
       <NewReview />
       <h2 className="my-4 text-4xl text-center ">Reviews</h2>
       <ReviewTable>{reviewComponents}</ReviewTable>
