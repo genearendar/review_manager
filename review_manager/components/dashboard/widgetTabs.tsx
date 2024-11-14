@@ -1,6 +1,7 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Widget } from "@/app/dashboard/dashboardUtils";
 import WidgetSingle from "./widgetSingle";
+import AddWidgetForm from "./widgetAddForm";
 
 export default function WidgetTabs({
   initialWidgets,
@@ -19,7 +20,9 @@ export default function WidgetTabs({
       <TabsContent value="Your widgets">
         <div className="flex flex-col gap-2 max-w-xl">{widgetElements}</div>
       </TabsContent>
-      <TabsContent value="New widget">New widget form goes here</TabsContent>
+      <TabsContent value="New widget">
+        <AddWidgetForm />
+      </TabsContent>
     </Tabs>
   );
 }
