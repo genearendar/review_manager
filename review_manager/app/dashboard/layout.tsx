@@ -19,8 +19,10 @@ export default async function ProtectedPage({
   }
   return (
     <SidebarProvider>
-      <AppSidebar />
-      <main>
+      <aside>
+        <AppSidebar />
+      </aside>
+      <main className="flex-1">
         <SidebarTrigger />
         {children}
       </main>
