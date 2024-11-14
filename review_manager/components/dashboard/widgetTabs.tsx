@@ -1,11 +1,16 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Widget } from "@/app/dashboard/dashboardUtils";
+import WidgetSingle from "./widgetSingle";
 
 export default function WidgetTabs({
   initialWidgets,
 }: {
   initialWidgets: Widget[];
 }) {
+
+  const widgetElements = initialWidgets.map((w) => (
+    <WidgetSingle key={w.id} widget={w} />
+  ))
   return (
     <Tabs defaultValue="Your widgets">
       <TabsList>

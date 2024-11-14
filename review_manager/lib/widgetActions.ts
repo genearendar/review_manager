@@ -14,7 +14,8 @@ export async function getAllWidgets() {
     .from("review_groups")
     .select(
       `id, 
-        name, 
+        name,
+        type, 
         grouped!left(
           reviews(id)
         )`
@@ -31,6 +32,7 @@ export async function getAllWidgets() {
   const allWidgets = data.map((w) => ({
     id: w.id,
     name: w.name,
+    type: w.type,
     reviews: w.grouped.length
       ? w.grouped
           .map((r) => r.reviews) // Get reviews from grouped

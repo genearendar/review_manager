@@ -37,12 +37,14 @@ export interface FetchedReview {
 export interface Widget {
   id?: number;
   name: string;
+  type: string;
   reviews: Review[] | null;
 }
 
 export interface FetchedWidget {
   id: number;
   name: string;
+  type: string;
   grouped: {
     reviews: {
       id: number;
