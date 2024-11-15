@@ -1,7 +1,8 @@
 "use client";
 
-import { useState } from "react";
-import { useActionState } from "react";
+// @ts-ignore
+import { useState, useActionState } from "react";
+import { useRouter } from "next/navigation";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
@@ -27,6 +28,7 @@ export default function AddWidgetForm({ reviews }: { reviews: Review[] }) {
     })
   );
   const [actionState, formAction] = useActionState(addWidget, null);
+  const router = useRouter();
   //build the review checkboxes
   const reviewBoxes = widgetReviews.map((review) => (
     <div key={review.id} className="flex items-center space-x-2">
@@ -53,6 +55,12 @@ export default function AddWidgetForm({ reviews }: { reviews: Review[] }) {
     </div>
   ));
   console.log("Form state:", actionState);
+
+  // If the action is complete, switch to All widgets tab
+  if (actionState) {
+    router.push("?tab=allWidgets");
+  }
+
   return (
     <form className="space-y-4 max-w-xl" action={formAction}>
       <div className="space-y-2">

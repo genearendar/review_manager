@@ -1,6 +1,7 @@
 "use client";
 import { useRouter, useSearchParams } from "next/navigation";
 import { createContext, useContext } from "react";
+import { cn } from "@/lib/utils";
 
 const TabsContext = createContext<{
   activeTab: string;
@@ -44,7 +45,7 @@ const TabsList = ({
   children: React.ReactNode;
   className?: string;
 }) => {
-  return <div className={className}>{children}</div>;
+  return <div className="inline-flex gap-2 mb-4 bg-slate-100">{children}</div>;
 };
 
 const TabsTrigger = ({
@@ -57,8 +58,13 @@ const TabsTrigger = ({
   value: string;
 }) => {
   const { switchTab } = useTabsContext();
+  const {activeTab} = useTabsContext();
+  const classList = cn(
+    "rounded bg-slate-100 px-4 py-2", 
+    activeTab === value && "bg-slate-200"
+  )
   return (
-    <button className={className} onClick={() => switchTab(value)}>
+    <button className={classList} onClick={() => switchTab(value)}>
       {children}
     </button>
   );
