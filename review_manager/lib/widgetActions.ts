@@ -4,6 +4,7 @@ import { createClient } from "@/utils/supabase/server";
 import { getAuthUser } from "@/utils/supabase/auth-actions";
 import { getAllReviews } from "./reviewActions";
 import { Widget, Review, FetchedWidget } from "@/app/dashboard/dashboardUtils";
+import { revalidatePath } from "next/cache";
 
 export async function getAllWidgets() {
   const supabase = await createClient();
@@ -41,4 +42,26 @@ export async function getAllWidgets() {
   }));
 
   return allWidgets as Widget[];
+}
+
+export async function addWidget(formData: FormData) {
+  try {
+    // This will show in your terminal
+    console.log("Server action triggered");
+    console.log("Reviews", { ...selectedReviews });
+    const data = Object.fromEntries(formData);
+    const reviewIds = Object.keys(data)
+      .filter((key) => key.startsWith("review-")) // Only get review keys
+      .map((key) => key.replace("review-", "")) // Remove 'review-' prefix
+      // Or if you need numbers instead of strings:
+      .map((id) => parseInt(id));
+    console.log("Review ids:", reviewIds);
+
+    // You can also return data to the client
+    revalidatePath("/dashboard/widgets");
+    return { success: true, data: Object.fromEntries(formData) };
+  } catch (error) {
+    console.error("Error creating widget:", error);
+    return { success: false, error: "Failed to create widget" };
+  }
 }

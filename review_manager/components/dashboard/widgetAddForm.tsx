@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useFormState } from 'react-dom'
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
@@ -17,6 +18,7 @@ import { Switch } from "@/components/ui/switch";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Review } from "@/app/dashboard/dashboardUtils";
 import { Star } from "lucide-react";
+import { addWidget } from "@/lib/widgetActions";
 
 export default function AddWidgetForm({ reviews }: { reviews: Review[] }) {
   const [widgetReviews, setWidgetReviews] = useState(
@@ -24,18 +26,16 @@ export default function AddWidgetForm({ reviews }: { reviews: Review[] }) {
       return { ...r, selected: false };
     })
   );
-  const selectedReviews = widgetReviews.filter((r) => r.selected);
   //build the review checkboxes
   const reviewBoxes = widgetReviews.map((review) => (
     <div key={review.id} className="flex items-center space-x-2">
       <Checkbox
         id={`review-${review.id}`}
-        checked={
-          review.selected || false
-        }
-        onCheckedChange={() => 
-          setWidgetReviews((prev) => 
-            prev.map((r) => 
+        name={`review-${review.id}`}
+        checked={review.selected || false}
+        onCheckedChange={() =>
+          setWidgetReviews((prev) =>
+            prev.map((r) =>
               r.id === review.id ? { ...r, selected: !r.selected } : r
             )
           )
@@ -51,19 +51,20 @@ export default function AddWidgetForm({ reviews }: { reviews: Review[] }) {
       </Label>
     </div>
   ));
-  
-  
-  
   return (
-    <form className="space-y-4 max-w-xl">
+    <form className="space-y-4 max-w-xl" action={addWidget}>
       <div className="space-y-2">
-        <Label htmlFor="widget-name">Widget Name</Label>
-        <Input id="widget-name" placeholder="Enter widget name" />
+        <Label htmlFor="widgetName">Widget Name</Label>
+        <Input
+          id="widgetName"
+          name="widgetName"
+          placeholder="Enter widget name"
+        />
       </div>
       <div className="space-y-2">
-        <Label htmlFor="widget-type">Widget Type</Label>
-        <Select>
-          <SelectTrigger id="widget-type">
+        <Label htmlFor="widgetType">Widget Type</Label>
+        <Select name="widgetType">
+          <SelectTrigger id="widgetType">
             <SelectValue placeholder="Select widget type" />
           </SelectTrigger>
           <SelectContent>
