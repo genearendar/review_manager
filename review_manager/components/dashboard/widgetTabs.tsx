@@ -1,12 +1,14 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Widget } from "@/app/dashboard/dashboardUtils";
+import { Widget, Review } from "@/app/dashboard/dashboardUtils";
 import WidgetSingle from "./widgetSingle";
 import AddWidgetForm from "./widgetAddForm";
 
 export default function WidgetTabs({
   initialWidgets,
+  reviews,
 }: {
   initialWidgets: Widget[];
+  reviews: Review[];
 }) {
   const widgetElements = initialWidgets.map((w) => (
     <WidgetSingle key={w.id} widget={w} />
@@ -21,7 +23,7 @@ export default function WidgetTabs({
         <div className="flex flex-col gap-2 max-w-xl">{widgetElements}</div>
       </TabsContent>
       <TabsContent value="New widget">
-        <AddWidgetForm />
+        <AddWidgetForm reviews={reviews} />
       </TabsContent>
     </Tabs>
   );
