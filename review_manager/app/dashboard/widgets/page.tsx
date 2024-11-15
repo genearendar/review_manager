@@ -1,6 +1,7 @@
 import { getAllWidgets } from "@/lib/widgetActions";
 import { getAllReviews } from "@/lib/reviewActions";
 import WidgetTabs from "@/components/dashboard/widgetTabs";
+import { UrlTabs } from "@/components/dashboard/urlTabs";
 
 export default async function Account() {
   const widgets = await getAllWidgets();

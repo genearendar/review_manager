@@ -2,6 +2,12 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Widget, Review } from "@/app/dashboard/dashboardUtils";
 import WidgetSingle from "./widgetSingle";
 import AddWidgetForm from "./widgetAddForm";
+// import {
+//   UrlTabs,
+//   TabsList,
+//   TabsTrigger,
+//   TabsContent,
+// } from "@/components/dashboard/urlTabs";
 
 export default function WidgetTabs({
   initialWidgets,
@@ -26,5 +32,13 @@ export default function WidgetTabs({
         <AddWidgetForm reviews={reviews} />
       </TabsContent>
     </Tabs>
+    // <UrlTabs defaultValue="allWidgets">
+    //   <TabsList>
+    //     <TabsTrigger value="allWidgets">Your widgets</TabsTrigger>
+    //     <TabsTrigger value="newWidget">New widget</TabsTrigger>
+    //   </TabsList>
+    //   <TabsContent value="allWidgets">All widgets go here</TabsContent>
+    //   <TabsContent value="newWidget">New widget goes here</TabsContent>
+    // </UrlTabs>
   );
 }
