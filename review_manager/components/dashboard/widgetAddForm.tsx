@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { useFormState } from 'react-dom'
+import { useActionState } from "react";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
@@ -26,6 +26,7 @@ export default function AddWidgetForm({ reviews }: { reviews: Review[] }) {
       return { ...r, selected: false };
     })
   );
+  const [actionState, formAction] = useActionState(addWidget, null);
   //build the review checkboxes
   const reviewBoxes = widgetReviews.map((review) => (
     <div key={review.id} className="flex items-center space-x-2">
@@ -51,8 +52,9 @@ export default function AddWidgetForm({ reviews }: { reviews: Review[] }) {
       </Label>
     </div>
   ));
+  console.log("Form state:", actionState);
   return (
-    <form className="space-y-4 max-w-xl" action={addWidget}>
+    <form className="space-y-4 max-w-xl" action={formAction}>
       <div className="space-y-2">
         <Label htmlFor="widgetName">Widget Name</Label>
         <Input

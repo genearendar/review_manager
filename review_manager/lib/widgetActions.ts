@@ -44,11 +44,10 @@ export async function getAllWidgets() {
   return allWidgets as Widget[];
 }
 
-export async function addWidget(formData: FormData) {
+export async function addWidget(prevState: any, formData: FormData) {
   try {
     // This will show in your terminal
     console.log("Server action triggered");
-    console.log("Reviews", { ...selectedReviews });
     const data = Object.fromEntries(formData);
     const reviewIds = Object.keys(data)
       .filter((key) => key.startsWith("review-")) // Only get review keys
@@ -56,10 +55,11 @@ export async function addWidget(formData: FormData) {
       // Or if you need numbers instead of strings:
       .map((id) => parseInt(id));
     console.log("Review ids:", reviewIds);
+    console.log("Form data:", { ...formData });
 
     // You can also return data to the client
     revalidatePath("/dashboard/widgets");
-    return { success: true, data: Object.fromEntries(formData) };
+    return { success: true, data: data };
   } catch (error) {
     console.error("Error creating widget:", error);
     return { success: false, error: "Failed to create widget" };
