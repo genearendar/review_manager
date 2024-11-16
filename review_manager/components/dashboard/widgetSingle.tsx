@@ -1,7 +1,9 @@
 import { Widget } from "@/app/dashboard/dashboardUtils";
 import { X } from "lucide-react";
 import ActionButton from "./actionButton";
+import { Button } from "@/components/ui/button";
 import { deleteWidget } from "@/lib/widgetActions";
+import Link from "next/link";
 export default function WidgetSingle({ widget }: { widget: Widget }) {
   return (
     <div className="flex flex-col p-4 border-solid border-2 border-gray-200 rounded-md">
@@ -10,11 +12,14 @@ export default function WidgetSingle({ widget }: { widget: Widget }) {
       <p className="mt-4 text-md">
         Number of reviews: {widget.reviews?.length}
       </p>
-      <div className="button-group, flex-initial mt-4">
+      <div className="button-group flex flex-initial gap-2 mt-4 ">
+        <Button asChild>
+          <Link href={`?widget=${widget.id}`}>View widget</Link>
+        </Button>
         <ActionButton
           action={deleteWidget}
           args={widget.id!}
-          className="rounded py-2 px-4 bg-red-500"
+          className="rounded py-2 px-4 bg-red-500 hover:bg-red-600"
         >
           Delete widget
           {/* <X size={16} className="text-gray-600 hover:text-black" /> */}

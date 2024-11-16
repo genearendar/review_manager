@@ -1,16 +1,32 @@
 import { getAllWidgets } from "@/lib/widgetActions";
 import { getAllReviews } from "@/lib/reviewActions";
 import WidgetTabs from "@/components/dashboard/widgetTabs";
-import { UrlTabs } from "@/components/dashboard/urlTabs";
+import WidgetScreen from "@/components/dashboard/widgetScreen";
+import { Widget } from "@/app/dashboard/dashboardUtils";
 
-export default async function Account() {
+export default async function Widgets({
+  searchParams,
+}: {
+  searchParams: { [key: string]: string | string[] | undefined };
+}) {
   const widgets = await getAllWidgets();
   const reviews = await getAllReviews();
+  const queryString = await searchParams;
+
+  function matchWidget() {
+    const widgetParam = queryString?.widget;
+    if (!widgetParam || typeof widgetParam !== "string") return null;
+    const widgetId = Number(widgetParam);
+    return widgets.find((w) => w.id === widgetId) as Widget;
+  }
 
   return (
     <>
-      <h2 className="text-4xl mb-4">Your widgets</h2>
-      <WidgetTabs initialWidgets={widgets} reviews={reviews} />
+      {queryString?.widget ? (
+        <WidgetScreen widget={matchWidget()} />
+      ) : (
+        <WidgetTabs initialWidgets={widgets} reviews={reviews} />
+      )}
     </>
   );
 }

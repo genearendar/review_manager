@@ -20,6 +20,21 @@ export default function WidgetTabs({
     <WidgetSingle key={w.id} widget={w} />
   ));
   return (
+    <>
+      <h2 className="text-4xl mb-4">Your widgets</h2>
+      <UrlTabs defaultValue="allWidgets">
+        <TabsList>
+          <TabsTrigger value="allWidgets">Your widgets</TabsTrigger>
+          <TabsTrigger value="newWidget">New widget</TabsTrigger>
+        </TabsList>
+        <TabsContent value="allWidgets">
+          <div className="flex flex-col gap-2 max-w-xl">{widgetElements}</div>
+        </TabsContent>
+        <TabsContent value="newWidget">
+          <AddWidgetForm reviews={reviews} />
+        </TabsContent>
+      </UrlTabs>
+    </>
     // <Tabs defaultValue="Your widgets">
     //   <TabsList>
     //     <TabsTrigger value="Your widgets">Your widgets</TabsTrigger>
@@ -32,17 +47,5 @@ export default function WidgetTabs({
     //     <AddWidgetForm reviews={reviews} />
     //   </TabsContent>
     // </Tabs>
-    <UrlTabs defaultValue="allWidgets">
-      <TabsList>
-        <TabsTrigger value="allWidgets">Your widgets</TabsTrigger>
-        <TabsTrigger value="newWidget">New widget</TabsTrigger>
-      </TabsList>
-      <TabsContent value="allWidgets">
-        <div className="flex flex-col gap-2 max-w-xl">{widgetElements}</div>
-      </TabsContent>
-      <TabsContent value="newWidget">
-        <AddWidgetForm reviews={reviews} />
-      </TabsContent>
-    </UrlTabs>
   );
 }
