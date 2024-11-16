@@ -29,6 +29,9 @@ export default function AddWidgetForm({ reviews }: { reviews: Review[] }) {
   );
   const [actionState, formAction] = useActionState(addWidget, null);
   const router = useRouter();
+  if (actionState) {
+    router.push("?tab=allWidgets");
+  }
   //build the review checkboxes
   const reviewBoxes = widgetReviews.map((review) => (
     <div key={review.id} className="flex items-center space-x-2">
@@ -57,9 +60,7 @@ export default function AddWidgetForm({ reviews }: { reviews: Review[] }) {
   console.log("Form state:", actionState);
 
   // If the action is complete, switch to All widgets tab
-  if (actionState) {
-    router.push("?tab=allWidgets");
-  }
+
 
   return (
     <form className="space-y-4 max-w-xl" action={formAction}>

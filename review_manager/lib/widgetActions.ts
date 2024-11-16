@@ -45,21 +45,47 @@ export async function getAllWidgets() {
 }
 
 export async function addWidget(prevState: any, formData: FormData) {
+  const supabase = await createClient();
+  const user = await getAuthUser();
   try {
-    // This will show in your terminal
-    console.log("Server action triggered");
-    const data = Object.fromEntries(formData);
-    const reviewIds = Object.keys(data)
+    // Get an array of review IDs for Grouped table
+    const reviewIds = Object.keys(Object.fromEntries(formData))
       .filter((key) => key.startsWith("review-")) // Only get review keys
       .map((key) => key.replace("review-", "")) // Remove 'review-' prefix
-      // Or if you need numbers instead of strings:
       .map((id) => parseInt(id));
-    console.log("Review ids:", reviewIds);
-    console.log("Form data:", { ...formData });
 
-    // You can also return data to the client
+    // Add the data from form entry to review_groups table
+    console.log(Object.fromEntries(formData));
+    const { data: newGroup, error: groupError } = await supabase
+      .from("review_groups")
+      .insert([
+        {
+          name: formData.get("widgetName") as string,
+          type: formData.get("widgetType") as string,
+          auth_id: user.id,
+        },
+      ])
+      .select("id")
+      .single();
+
+    if (groupError) throw groupError;
+
+    // Create records for grouped table
+    const groupedRecords = reviewIds.map((reviewId) => ({
+      group_id: newGroup.id,
+      review_id: reviewId,
+      auth_id: user.id,
+    }));
+
+    const { error: groupedError } = await supabase
+      .from("grouped")
+      .insert(groupedRecords);
+
+    if (groupedError) throw groupedError;
+    // Update page data on success
     revalidatePath("/dashboard/widgets");
-    return { success: true, data: data };
+    console.log("Widget created successfully");
+    return { success: true };
   } catch (error) {
     console.error("Error creating widget:", error);
     return { success: false, error: "Failed to create widget" };
