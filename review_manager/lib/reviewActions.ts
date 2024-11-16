@@ -92,7 +92,6 @@ export async function getReviewSources() {
 }
 
 export async function deleteReview(id: number) {
-  "use server";
   const supabase = await createClient();
   const { data, error } = await supabase.from("reviews").delete().match({ id });
   revalidatePath("/dashboard/reviews");

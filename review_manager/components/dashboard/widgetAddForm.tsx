@@ -29,6 +29,8 @@ export default function AddWidgetForm({ reviews }: { reviews: Review[] }) {
   );
   const [actionState, formAction] = useActionState(addWidget, null);
   const router = useRouter();
+
+  // If the form action is complete, switch to All widgets tab
   if (actionState) {
     router.push("?tab=allWidgets");
   }
@@ -57,10 +59,6 @@ export default function AddWidgetForm({ reviews }: { reviews: Review[] }) {
       </Label>
     </div>
   ));
-  console.log("Form state:", actionState);
-
-  // If the action is complete, switch to All widgets tab
-
 
   return (
     <form className="space-y-4 max-w-xl" action={formAction}>

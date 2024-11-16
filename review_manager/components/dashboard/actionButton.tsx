@@ -7,12 +7,12 @@ export default function ActionButton({
   action,
   children,
   args,
-  classes
+  className,
 }: {
   action: (a?: any) => Promise<void>;
   children: React.ReactNode;
   args: any;
-  classes?: string;
+  className?: string;
 }) {
   const handleSubmit = args ? action.bind(null, args) : action;
 
@@ -24,11 +24,17 @@ export default function ActionButton({
       try {
         await action(args);
       } catch (e) {
-        setError(e instanceof Error ? e.message : "Error performing a server action");
+        setError(
+          e instanceof Error ? e.message : "Error performing a server action"
+        );
       }
     });
   };
-  return <button className={classes} onClick={handleClick}>{children}</button>;
+  return (
+    <button className={className} onClick={handleClick}>
+      {children}
+    </button>
+  );
   //return <form action={handleSubmit}>{children}</form>;
 }
 

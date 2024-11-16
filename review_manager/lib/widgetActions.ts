@@ -91,3 +91,14 @@ export async function addWidget(prevState: any, formData: FormData) {
     return { success: false, error: "Failed to create widget" };
   }
 }
+
+export async function deleteWidget(id: number) {
+  const supabase = await createClient();
+  const { data, error } = await supabase
+    .from("review_groups")
+    .delete()
+    .match({ id });
+  revalidatePath("/dashboard/widgets");
+  if (error) console.error("Delete error:", error);
+  else console.log("Delete successful:", data);
+}
