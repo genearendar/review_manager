@@ -20,9 +20,9 @@ export default function WidgetScreen({ widget }: { widget: Widget }) {
           <MoveLeft /> Back to widgets
         </Link>
       </Button>
-      <h2>{widget.name}</h2>
-      <p>{widget.type}</p>
-      <p>Reviews:</p>
+      <h1 className="text-2xl">{widget.name}</h1>
+      <p className="text-md text-gray-500">{widget.type}</p>
+      <p className="text-xl mt-4">Reviews:</p>
       {reviewsElements ? reviewsElements : <p>No reviews</p>}
     </div>
   );
