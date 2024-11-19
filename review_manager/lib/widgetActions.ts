@@ -21,7 +21,8 @@ export async function getAllWidgets() {
         type, 
         grouped!left(
           reviews(id)
-        )`
+        ),
+        published`
     )
     .eq("auth_id", user.id)
     .returns<FetchedWidget[]>();
@@ -44,6 +45,7 @@ export async function getAllWidgets() {
           .map((r) => r.reviews) // Get reviews from grouped
           .map((rev: any) => reviewsMap.get(rev.id))
       : null, // Get matching review from Map
+    published: w.published,
   }));
 
   return allWidgets as Widget[];
@@ -146,4 +148,28 @@ export async function getPublicWidget(id: number) {
   };
 
   return widget;
+}
+
+// Publish a widget
+
+export async function publishWidget(id: number) {
+  const supabase = await createClient();
+  const { data, error } = await supabase
+    .from("review_groups")
+    .update({ published: true })
+    .match({ id });
+  revalidatePath("/dashboard/widgets");
+  if (error) console.error("Publish error:", error);
+  else console.log("Publish successful:", data);
+}
+
+export async function unpublishWidget(id: number) {
+  const supabase = await createClient();
+  const { data, error } = await supabase
+    .from("review_groups")
+    .update({ published: false })
+    .match({ id });
+  revalidatePath("/dashboard/widgets");
+  if (error) console.error("Unublish error:", error);
+  else console.log("Unublish successful:", data);
 }

@@ -7,8 +7,19 @@ import Link from "next/link";
 export default function WidgetSingle({ widget }: { widget: Widget }) {
   return (
     <div className="flex flex-col p-4 border-solid border-2 border-gray-200 rounded-md">
-      <h2 className="text-xl">{widget.name}</h2>
-      <p className="text-sm text-gray-500">Widget type:{widget.type}</p>
+      <div className="flex justify-between">
+        <div>
+          <h2 className="text-xl">{widget.name}</h2>
+          <p className="text-sm text-gray-500">Widget type:{widget.type}</p>
+        </div>
+        {widget.published ? (
+          <div className="h-min bg-green-100 py-2 px-4 rounded-lg">
+            Published
+          </div>
+        ) : (
+          <div className="h-min bg-orange-100 p-2 px-4 rounded-lg">Draft</div>
+        )}
+      </div>
       <p className="mt-4 text-md">
         Number of reviews: {widget.reviews?.length}
       </p>

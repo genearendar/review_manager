@@ -39,6 +39,7 @@ export interface Widget {
   name: string;
   type: string;
   reviews: Review[] | null;
+  published?: boolean;
 }
 
 export interface FetchedWidget {
@@ -50,6 +51,7 @@ export interface FetchedWidget {
       id: number;
     }[];
   }[];
+  published: boolean;
 }
 
 //Transform DatabaseReview to Review - remove auth_id and rename object keys

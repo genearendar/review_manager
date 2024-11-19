@@ -21,5 +21,3 @@ export async function GET(request: NextRequest) {
     return Response.json({ error: "Widget not found" }, { status: 404 });
   }
 }
-
-
