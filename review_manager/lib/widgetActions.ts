@@ -2,14 +2,16 @@
 
 import { createClient } from "@/utils/supabase/server";
 import { getAuthUser } from "@/utils/supabase/auth-actions";
-import { getAllReviews } from "./reviewActions";
+import { getAllReviews, getWidgetReviews } from "./reviewActions";
 import { Widget, Review, FetchedWidget } from "@/app/dashboard/dashboardUtils";
 import { revalidatePath } from "next/cache";
 
+// Get all widget for an authenticated user
 export async function getAllWidgets() {
   const supabase = await createClient();
   const user = await getAuthUser();
   const allReviews = await getAllReviews();
+
   // Fetch widgets that match the authenticated user's `auth_id`
   const { data, error } = await supabase
     .from("review_groups")
@@ -26,10 +28,13 @@ export async function getAllWidgets() {
   if (error) {
     throw new Error(`Error fetching widgets: ${error.message}`);
   }
+
+  // Get reviews that are part of widgets:
+  // Map review ids to review objects
   const reviewsMap: Map<number | undefined, Review> = new Map(
     allReviews.map((review) => [review.id, review])
   );
-
+  // Build final widget objects
   const allWidgets = data.map((w) => ({
     id: w.id,
     name: w.name,
@@ -44,6 +49,7 @@ export async function getAllWidgets() {
   return allWidgets as Widget[];
 }
 
+//Add a widget to the database
 export async function addWidget(prevState: any, formData: FormData) {
   const supabase = await createClient();
   const user = await getAuthUser();
@@ -92,6 +98,7 @@ export async function addWidget(prevState: any, formData: FormData) {
   }
 }
 
+//Delete widget from a DB (deletes record from Grouped table too)
 export async function deleteWidget(id: number) {
   const supabase = await createClient();
   const { data, error } = await supabase
@@ -101,4 +108,42 @@ export async function deleteWidget(id: number) {
   revalidatePath("/dashboard/widgets");
   if (error) console.error("Delete error:", error);
   else console.log("Delete successful:", data);
+}
+
+// Get a public widget by id (for API)
+export async function getPublicWidget(id: number) {
+  const supabase = await createClient();
+  const { data: widgetData, error } = await supabase
+    .from("review_groups")
+    .select(
+      `id, 
+        name,
+        type, 
+        grouped!left(
+          reviews(id)
+        )`
+    )
+    .eq("id", id)
+    .eq("published", true)
+    .single();
+  if (error) {
+    throw new Error(`Error fetching the widget: ${error.message}`);
+  }
+
+  let widgetReviews: Review[] | null = null;
+
+  try {
+    widgetReviews = await getWidgetReviews(widgetData.id);
+  } catch (error) {
+    console.error("Error fetching widget reviews:", error);
+    widgetReviews = null;
+  }
+  const widget: Widget = {
+    id: widgetData.id,
+    name: widgetData.name,
+    type: widgetData.type,
+    reviews: widgetReviews,
+  };
+
+  return widget;
 }
