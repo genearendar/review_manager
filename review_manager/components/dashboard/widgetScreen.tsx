@@ -23,7 +23,7 @@ export default function WidgetScreen({ widget }: { widget: Widget }) {
       <h2>{widget.name}</h2>
       <p>{widget.type}</p>
       <p>Reviews:</p>
-      {reviewsElements}
+      {reviewsElements ? reviewsElements : <p>No reviews</p>}
     </div>
   );
 }

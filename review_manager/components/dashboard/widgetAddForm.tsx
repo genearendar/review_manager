@@ -32,7 +32,7 @@ export default function AddWidgetForm({ reviews }: { reviews: Review[] }) {
 
   // If the form action is complete, switch to All widgets tab
   if (actionState) {
-    router.push("?tab=allWidgets");
+    router.push(`?widget=${actionState.data.id}`);
   }
   //build the review checkboxes
   const reviewBoxes = widgetReviews.map((review) => (
@@ -59,6 +59,8 @@ export default function AddWidgetForm({ reviews }: { reviews: Review[] }) {
       </Label>
     </div>
   ));
+
+  console.log(actionState);
 
   return (
     <form className="space-y-4 max-w-xl" action={formAction}>

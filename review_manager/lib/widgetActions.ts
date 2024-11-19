@@ -85,7 +85,7 @@ export async function addWidget(prevState: any, formData: FormData) {
     // Update page data on success
     revalidatePath("/dashboard/widgets");
     console.log("Widget created successfully");
-    return { success: true };
+    return { success: true, data: newGroup };
   } catch (error) {
     console.error("Error creating widget:", error);
     return { success: false, error: "Failed to create widget" };

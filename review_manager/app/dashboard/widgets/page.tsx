@@ -15,15 +15,16 @@ export default async function Widgets({
 
   function matchWidget() {
     const widgetParam = queryString?.widget;
-    if (!widgetParam || typeof widgetParam !== "string") return null;
+    if (!widgetParam) return null;
     const widgetId = Number(widgetParam);
     return widgets.find((w) => w.id === widgetId) as Widget;
   }
+  const widgetToShow = matchWidget();
 
   return (
     <>
-      {queryString?.widget ? (
-        <WidgetScreen widget={matchWidget()} />
+      {widgetToShow ? (
+        <WidgetScreen widget={widgetToShow} />
       ) : (
         <WidgetTabs initialWidgets={widgets} reviews={reviews} />
       )}
