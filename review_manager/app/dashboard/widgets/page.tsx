@@ -7,15 +7,19 @@ import { Widget } from "@/app/dashboard/dashboardUtils";
 export default async function Widgets({
   searchParams,
 }: {
-  searchParams?: { [key: string]: string | string[] };
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 }) {
-  const widgets = await getAllWidgets();
-  const reviews = await getAllReviews();
+  const [widgets, reviews, resolvedSearchParams] = await Promise.all([
+    getAllWidgets(),
+    getAllReviews(),
+    searchParams,
+  ]);
 
-  const widgetParam = await searchParams?.widget;
-  const widgetToShow = widgetParam
-    ? widgets.find((w) => w.id === Number(widgetParam)) || null
-    : null;
+  const widgetParam = resolvedSearchParams.widget;
+  const widgetToShow =
+    widgetParam && typeof widgetParam === "string"
+      ? widgets.find((w) => w.id === Number(widgetParam)) || null
+      : null;
 
   return (
     <>
