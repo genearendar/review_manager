@@ -6,7 +6,7 @@ import ActionButton from "@/components/dashboard/actionButton";
 import { publishWidget, unpublishWidget } from "@/lib/widgetActions";
 export default function WidgetScreen({ widget }: { widget: Widget }) {
   const reviewsElements = widget.reviews?.map((r: Review) => (
-    <div>
+    <div key={r.id}>
       <span className="font-medium">{r.body}</span>
       <span className="ml-2 text-sm text-muted-foreground">
         {r.stars}{" "}
