@@ -55,6 +55,7 @@ export async function getWidgetReviews(id: number): Promise<Review[]> {
   console.log("Fetched reviews:", data);
 
   const widgetReviews: Review[] = data.map((r) => transformFromDbReview(r));
+  console.log("Widget reviews:", widgetReviews);
   return widgetReviews;
 }
 
