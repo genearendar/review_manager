@@ -1,5 +1,6 @@
 (function () {
   function loadReviewWidget(widgetId) {
+    console.log("running the function");
     // Create a container for the widget
     const container = document.createElement("div");
     container.id = `review-widget-${widgetId}`;
@@ -16,7 +17,7 @@
     );
 
     // Fetch the widget data
-    fetch(`https://hidden-vampire-97vp4rjj69xcxvw4-3000.app.github.dev/api/widgets?id=${widgetId}`)
+    fetch(`https://review-manager-cyan.vercel.app/api/widgets?id=${widgetId}`)
       .then((response) => response.json())
       .then((data) => {
         renderWidget(container, data);
