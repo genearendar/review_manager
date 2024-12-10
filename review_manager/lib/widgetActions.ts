@@ -135,7 +135,6 @@ export async function getPublicWidget(id: number) {
   let widgetReviews: Review[] | null = null;
 
   try {
-    console.log("Getting reviews for widget ID:", widgetData.id);
     widgetReviews = await getWidgetReviews(widgetData.id);
   } catch (error) {
     console.error("Error fetching widget reviews:", error);

@@ -35,7 +35,7 @@ export async function getAllReviews(): Promise<Review[]> {
 // Get all reviews for a specific widget
 export async function getWidgetReviews(id: number): Promise<Review[]> {
   const supabase = await createClient();
-
+  console.log("Getting reviews for widget ID:", id);
   // Fetch reviews that are associated with the grouped table for the specified widget_id
   const { data, error } = await supabase
     .from("reviews")
@@ -52,6 +52,7 @@ export async function getWidgetReviews(id: number): Promise<Review[]> {
   if (error) {
     throw new Error(`Error fetching reviews: ${error.message}`);
   }
+  console.log("Fetched reviews:", data);
 
   const widgetReviews: Review[] = data.map((r) => transformFromDbReview(r));
   return widgetReviews;
