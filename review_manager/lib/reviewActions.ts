@@ -49,9 +49,13 @@ export async function getWidgetReviews(id: number): Promise<Review[]> {
     throw new Error(`Error fetching reviews: ${error.message}`);
   }
   console.log("Fetched reviews:", data);
-  console.log("Data type:", typeof data);
 
-  const widgetReviews: Review[] = data.map((r) => transformFromDbReview(r));
+  const widgetReviews: Review[] = data.map((r) => {
+    console.log("Running transform on:", r);
+    let result = transformFromDbReview(r);
+    console.log("Result:", result);
+    return result;
+  });
   console.log("Widget reviews:", widgetReviews);
   return widgetReviews;
 }
