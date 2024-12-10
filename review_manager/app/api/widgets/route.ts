@@ -1,4 +1,4 @@
-import { NextRequest } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import { getPublicWidget } from "@/lib/widgetActions";
 export async function GET(request: NextRequest) {
   const searchParams = request.nextUrl.searchParams;
@@ -13,9 +13,16 @@ export async function GET(request: NextRequest) {
     if (!widget) {
       return Response.json({ error: "Widget not found" }, { status: 404 });
     }
-    return Response.json({
-      widget,
-    });
+    return Response.json(
+      { widget },
+      {
+        status: 200,
+        headers: {
+          "Access-Control-Allow-Origin": "*", // Allow any domain
+          "Content-Type": "application/json",
+        },
+      }
+    );
   } catch (error) {
     console.error("Error fetching widget:", error);
     return Response.json({ error: "Widget not found" }, { status: 404 });
