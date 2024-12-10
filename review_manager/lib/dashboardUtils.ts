@@ -56,7 +56,6 @@ export interface FetchedWidget {
 
 //Transform DatabaseReview to Review - remove auth_id and rename object keys
 export function transformFromDbReview(dbReview: FetchedReview): Review {
-  console.log("Transforming review:", dbReview);
   return {
     id: dbReview.id,
     body: dbReview.body,
