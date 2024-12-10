@@ -3,7 +3,7 @@
 import { createClient } from "@/utils/supabase/server";
 import { getAuthUser } from "@/utils/supabase/auth-actions";
 import { getAllReviews, getWidgetReviews } from "./reviewActions";
-import { Widget, Review, FetchedWidget } from "@/app/dashboard/dashboardUtils";
+import { Widget, Review, FetchedWidget } from "@/lib/dashboardUtils";
 import { revalidatePath } from "next/cache";
 
 // Get all widget for an authenticated user

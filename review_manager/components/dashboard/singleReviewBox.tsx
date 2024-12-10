@@ -1,4 +1,4 @@
-import { Review } from "@/app/dashboard/dashboardUtils";
+import { Review } from "@/lib/dashboardUtils";
 import TempButton from "./tempButton";
 import ActionButton from "./actionButton";
 import { deleteReview } from "@/lib/reviewActions";

@@ -17,7 +17,7 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Slider } from "@/components/ui/slider";
 import { Switch } from "@/components/ui/switch";
 import { Checkbox } from "@/components/ui/checkbox";
-import { Review } from "@/app/dashboard/dashboardUtils";
+import { Review } from "@/lib/dashboardUtils";
 import { Star } from "lucide-react";
 import { addWidget } from "@/lib/widgetActions";
 

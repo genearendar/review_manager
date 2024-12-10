@@ -2,7 +2,7 @@ import { getAllWidgets } from "@/lib/widgetActions";
 import { getAllReviews } from "@/lib/reviewActions";
 import WidgetTabs from "@/components/dashboard/widgetTabs";
 import WidgetScreen from "@/components/dashboard/widgetScreen";
-import { Widget } from "@/app/dashboard/dashboardUtils";
+import { Widget } from "@/lib/dashboardUtils";
 
 export default async function Widgets({
   searchParams,

@@ -1,4 +1,4 @@
-import { Review } from "@/app/dashboard/dashboardUtils";
+import { Review } from "@/lib/dashboardUtils";
 import SingleReviewBox from "./singleReviewBox";
 import NewReview from "./newReview";
 import ReviewTable from "./reviewTable";

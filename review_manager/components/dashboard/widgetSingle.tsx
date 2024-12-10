@@ -1,4 +1,4 @@
-import { Widget } from "@/app/dashboard/dashboardUtils";
+import { Widget } from "@/lib/dashboardUtils";
 import { X } from "lucide-react";
 import ActionButton from "./actionButton";
 import { Button } from "@/components/ui/button";

@@ -1,4 +1,4 @@
-import { Widget, Review } from "@/app/dashboard/dashboardUtils";
+import { Widget, Review } from "@/lib/dashboardUtils";
 import Link from "next/link";
 import { Star, MoveLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";

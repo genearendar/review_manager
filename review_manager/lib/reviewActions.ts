@@ -2,12 +2,8 @@
 
 import { createClient } from "@/utils/supabase/server";
 import { getAuthUser } from "@/utils/supabase/auth-actions";
-import {
-  Review,
-  DatabaseReview,
-  FetchedReview,
-} from "@/app/dashboard/dashboardUtils";
-import { transformFromDbReview } from "@/app/dashboard/dashboardUtils";
+import { Review, DatabaseReview, FetchedReview } from "@/lib/dashboardUtils";
+import { transformFromDbReview } from "@/lib/dashboardUtils";
 import { revalidatePath } from "next/cache";
 
 // Return all reviews of the current user

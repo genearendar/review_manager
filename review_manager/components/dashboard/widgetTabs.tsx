@@ -1,5 +1,5 @@
 // import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Widget, Review } from "@/app/dashboard/dashboardUtils";
+import { Widget, Review } from "@/lib/dashboardUtils";
 import WidgetSingle from "./widgetSingle";
 import AddWidgetForm from "./widgetAddForm";
 import {
