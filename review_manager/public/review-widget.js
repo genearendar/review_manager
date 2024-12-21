@@ -171,97 +171,49 @@
 
   function runSlider() {
     const slider = document.getElementById("slider");
+    const sliderWidth = slider.offsetWidth; //To use later
+    let reviewWidth = document.querySelector(".review").offsetWidth;
     const prev = document.getElementById("prev");
     const next = document.getElementById("next");
 
     let scrollAmount = 0;
-    const scrollStep = 320; // Width of one review + gap (adjust if necessary)
-    const autoScrollInterval = 8000; // 8 seconds
+    const scrollStep = reviewWidth + 20; // Width of one review + gap
+    const autoScrollInterval = 8000;
+    let isDragging = false;
+
+    slider.addEventListener("touchstart", () => (isDragging = true));
+    slider.addEventListener("touchend", () => {
+      isDragging = false;
+      snapScroll(0);
+    });
+    // Scroll to snap position - forward: 1 , backward: -1 or adjust in place: 0
+    function snapScroll(step) {
+      const scrollLeft = slider.scrollLeft;
+      const nearestIndex = Math.round(scrollLeft / scrollStep);
+      const snapPosition = (nearestIndex + step) * scrollStep;
+      if (snapPosition >= slider.scrollWidth) {
+        slider.scrollTo({ left: 0, behavior: "smooth" });
+      } else {
+        slider.scrollTo({ left: snapPosition, behavior: "smooth" });
+      }
+    }
 
     // Manual controls
     next.addEventListener("click", () => {
-      scrollAmount += scrollStep;
-      slider.scrollTo({ left: scrollAmount, behavior: "smooth" });
-      console.log("next");
+      snapScroll(1);
     });
-
     prev.addEventListener("click", () => {
-      scrollAmount -= scrollStep;
-      slider.scrollTo({ left: scrollAmount, behavior: "smooth" });
-      console.log("prev");
+      snapScroll(-1);
     });
 
     // Automatic scroll
     setInterval(() => {
       if (scrollAmount >= slider.scrollWidth - slider.clientWidth) {
         scrollAmount = 0; // Reset to the start
-      } else {
-        scrollAmount += scrollStep;
       }
-      slider.scrollTo({ left: scrollAmount, behavior: "smooth" });
+      snapScroll(1);
     }, autoScrollInterval);
   }
-
-  // function renderWidget(container, data) {
-  //   // Apply custom styles
-  //   Object.assign(container.style, data.styles.container);
-
-  //   // Create the HTML structure for your widget based on the data
-  //   let html = `
-  //     <h3 style="${Object.entries(data.styles.title)
-  //       .map(([k, v]) => `${k}:${v}`)
-  //       .join(";")}">${data.title}</h3>
-  //     <div style="${Object.entries(data.styles.reviewsContainer)
-  //       .map(([k, v]) => `${k}:${v}`)
-  //       .join(";")}">
-  //   `;
-
-  //   data.reviews.forEach((review) => {
-  //     html += `
-  //       <div style="${Object.entries(data.styles.review)
-  //         .map(([k, v]) => `${k}:${v}`)
-  //         .join(";")}">
-  //         <p style="${Object.entries(data.styles.reviewContent)
-  //           .map(([k, v]) => `${k}:${v}`)
-  //           .join(";")}">${review.content}</p>
-  //         <p style="${Object.entries(data.styles.reviewAuthor)
-  //           .map(([k, v]) => `${k}:${v}`)
-  //           .join(";")}">- ${review.author}</p>
-  //         ${
-  //           review.rating
-  //             ? `<div style="${Object.entries(data.styles.rating)
-  //                 .map(([k, v]) => `${k}:${v}`)
-  //                 .join(
-  //                   ";"
-  //                 )}">${"★".repeat(review.rating)}${"☆".repeat(5 - review.rating)}</div>`
-  //             : ""
-  //         }
-  //       </div>
-  //     `;
-  //   });
-
-  //   html += `
-  //     </div>
-  //     <a href="${data.moreLink}" style="${Object.entries(data.styles.moreLink)
-  //       .map(([k, v]) => `${k}:${v}`)
-  //       .join(";")}">See more reviews</a>
-  //   `;
-
-  //   if (data.poweredBy) {
-  //     html += `<div style="${Object.entries(data.styles.poweredBy)
-  //       .map(([k, v]) => `${k}:${v}`)
-  //       .join(";")}">Powered by ${data.poweredBy}</div>`;
-  //   }
-
-  //   container.innerHTML = html;
-
-  //   // Add any custom scripts
-  //   if (data.customScripts) {
-  //     const script = document.createElement("script");
-  //     script.textContent = data.customScripts;
-  //     container.appendChild(script);
-  //   }
-  // }
 
   // Look for a script tag with data-widget-id attribute
   const widgetId = document.currentScript.getAttribute("data-widget-id");
