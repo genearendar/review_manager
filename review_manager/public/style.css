@@ -1,0 +1,79 @@
+.review-widget {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5em;
+  justify-content: center;
+  max-width: 1200px;
+  margin-inline: auto;
+}
+.review {
+  flex-grow: 1;
+  width: clamp(300px, 30%, 90%);
+
+  position: relative;
+  padding: 1em;
+  border: 1px solid #80808080;
+  border-radius: 5px;
+}
+.review img {
+  width: 30px;
+  position: absolute;
+  right: 15px;
+}
+.review-name {
+  margin: 0;
+}
+.review-date {
+  opacity: 0.5;
+  margin-top: 8px;
+}
+.review-body {
+  font-style: italic;
+}
+
+/* Slider styles */
+
+.review-widget {
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  max-width: 800px;
+  margin: auto;
+}
+
+.slider {
+  display: flex;
+  gap: 20px;
+  transition: transform 0.5s ease-in-out;
+}
+
+.review {
+  min-width: 300px; /* Adjust this width as needed */
+  flex-shrink: 0;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  background: white;
+  text-align: center;
+}
+
+.control {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: rgba(0, 0, 0, 0.5);
+  color: white;
+  border: none;
+  cursor: pointer;
+  padding: 10px;
+  z-index: 10;
+}
+
+.prev {
+  left: 10px;
+}
+
+.next {
+  right: 10px;
+}
