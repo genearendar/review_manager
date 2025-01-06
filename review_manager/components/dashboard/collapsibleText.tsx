@@ -26,7 +26,11 @@ export default function CollapsibleText({
       {collapsed ? truncatedText : text}
       {truncatedText && <br />}
       {truncatedText && (
-        <button onClick={toggleCollapsed} className={buttonClasses}>
+        <button
+          type="button"
+          onClick={toggleCollapsed}
+          className={buttonClasses}
+        >
           {collapsed ? buttonTextCollapsed : buttonTextExpended}
         </button>
       )}
