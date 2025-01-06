@@ -3,18 +3,36 @@ import Link from "next/link";
 import { Star, MoveLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import ActionButton from "@/components/dashboard/actionButton";
+import CollapsibleText from "@/components/dashboard/collapsibleText";
 import { publishWidget, unpublishWidget } from "@/lib/widgetActions";
+import { truncateText } from "@/lib/utils";
 export default function WidgetScreen({ widget }: { widget: Widget }) {
-  const reviewsElements = widget.reviews?.map((r: Review) => (
-    <div key={r.id}>
-      <span className="font-medium">{r.body}</span>
-      <span className="ml-2 text-sm text-muted-foreground">
-        {r.stars}{" "}
-        <Star className="w-3 h-3 inline fill-yellow-400 stroke-yellow-400" />
-      </span>
-      <span className="ml-2 font-medium">{r.reviewedBy}</span>
-    </div>
-  ));
+  const reviewsElements = widget.reviews?.map((r: Review) => {
+    const truncatedBody = truncateText(r.body, 150);
+    const reviewText = truncatedBody
+      ? truncatedBody + <Button>Read more</Button>
+      : r.body;
+    return (
+      <div key={r.id} className="mb-4">
+        <div className="font-medium">
+          <CollapsibleText
+            text={r.body}
+            length={150}
+            buttonTextCollapsed="Read more"
+            buttonTextExpended="Read less"
+            buttonClasses="p-0 text-muted-foreground"
+          />
+        </div>
+        <span className="ml-2 text-sm text-muted-foreground">
+          {r.stars}{" "}
+          <Star className="w-3 h-3 inline fill-yellow-400 stroke-yellow-400" />
+        </span>
+        <span className="ml-2 font-medium text-muted-foreground">
+          {r.reviewedBy}
+        </span>
+      </div>
+    );
+  });
   return (
     <div className="max-w-xl">
       <Button variant="ghost" asChild className="mb-4">

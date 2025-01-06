@@ -22,6 +22,8 @@ export default async function Widgets({
       : null;
 
   return (
+  // Show a specific widget if valid search params present
+  // otherwise show all widgets
     <>
       {widgetToShow ? (
         <WidgetScreen widget={widgetToShow as Widget} />
