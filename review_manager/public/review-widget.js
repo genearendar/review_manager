@@ -1,4 +1,5 @@
 (function () {
+  const BASE_URL = "https://review-manager-cyan.vercel.app/";
   const styleGrid = `
   .review-widget {
     display: flex;
@@ -134,7 +135,7 @@
     const reviews = data.widget.reviews.map((review) => {
       return `
         <div class="review">
-        <img src="./google.png" alt="">
+        <img src="${BASE_URL}img/google.png" alt="">
         <h3 class="review-name">${review.reviewedBy}</h3>
         <p class="review-date">${review.date}</p>
         <div class="review-rating">${review.stars}★</div>

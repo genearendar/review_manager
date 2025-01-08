@@ -15,7 +15,7 @@ export default function WidgetScreen({ widget }: { widget: Widget }) {
       : r.body;
     return (
       <div key={r.id} className="mb-4">
-        <div className="font-medium">
+        <div className="text-base">
           <CollapsibleText
             text={r.body}
             length={150}
@@ -59,23 +59,6 @@ export default function WidgetScreen({ widget }: { widget: Widget }) {
       <h2 className="text-xl mt-4 mb-2">Reviews:</h2>
       {reviewsElements ? reviewsElements : <p>No reviews</p>}
       <WidgetScreenButtons published={widget.published} id={widget.id!} />
-      {!widget.published ? (
-        <ActionButton
-          action={publishWidget}
-          args={widget.id!}
-          className="mt-4 px-4 py-2 rounded bg-green-500 hover:bg-green-600"
-        >
-          Publish widget
-        </ActionButton>
-      ) : (
-        <ActionButton
-          action={unpublishWidget}
-          args={widget.id!}
-          className="mt-4 px-4 py-2 rounded bg-orange-200 hover:bg-orange-300"
-        >
-          Unpublish widget
-        </ActionButton>
-      )}
     </div>
   );
 }
