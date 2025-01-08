@@ -1,9 +1,10 @@
 import { Widget, Review } from "@/lib/dashboardUtils";
 import Link from "next/link";
-import { Star, MoveLeft } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import WidgetScreenButtons from "./widgetScreenButtons";
 import ActionButton from "@/components/dashboard/actionButton";
 import CollapsibleText from "@/components/dashboard/collapsibleText";
+import { Star, MoveLeft } from "lucide-react";
+import { Button } from "@/components/ui/button";
 import { publishWidget, unpublishWidget } from "@/lib/widgetActions";
 import { truncateText } from "@/lib/utils";
 export default function WidgetScreen({ widget }: { widget: Widget }) {
@@ -42,7 +43,9 @@ export default function WidgetScreen({ widget }: { widget: Widget }) {
       </Button>
       <div className="flex justify-between align-center">
         <div>
-          <h1 className="text-2xl">{widget.name}</h1>
+          <h1 className="text-2xl">
+            Widget: <span className="font-semibold">{widget.name}</span>
+          </h1>
           <p className="text-md text-gray-500">{widget.type}</p>
         </div>
         {widget.published ? (
@@ -53,8 +56,9 @@ export default function WidgetScreen({ widget }: { widget: Widget }) {
           <div className="h-min bg-orange-100 p-2 px-4 rounded-lg">Draft</div>
         )}
       </div>
-      <p className="text-xl mt-4">Reviews:</p>
+      <h2 className="text-xl mt-4 mb-2">Reviews:</h2>
       {reviewsElements ? reviewsElements : <p>No reviews</p>}
+      <WidgetScreenButtons published={widget.published} id={widget.id!} />
       {!widget.published ? (
         <ActionButton
           action={publishWidget}

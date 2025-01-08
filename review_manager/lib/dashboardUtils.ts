@@ -39,7 +39,7 @@ export interface Widget {
   name: string;
   type: string;
   reviews: Review[] | null;
-  published?: boolean;
+  published: boolean;
 }
 
 export interface FetchedWidget {

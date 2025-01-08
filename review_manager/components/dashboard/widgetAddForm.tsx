@@ -55,7 +55,7 @@ export default function AddWidgetForm({ reviews }: { reviews: Review[] }) {
         htmlFor={`review-${review.id}`}
         className="flex flex-wrap items-center"
       >
-        <div className="font-medium mr-2">
+        <div className="font-medium mr-2 mb-1">
           <CollapsibleText
             text={review.body}
             length={150}

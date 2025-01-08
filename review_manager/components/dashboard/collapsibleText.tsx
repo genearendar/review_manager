@@ -2,6 +2,7 @@
 import { truncateText } from "@/lib/utils";
 import { useState } from "react";
 
+// Accepts text as a string, a length, and two variants of button text for expanding/collapsing
 export default function CollapsibleText({
   text,
   length,
