@@ -136,7 +136,7 @@
       const truncatedText = truncateText(review.body, 150);
       const renderedText = truncatedText ? truncatedText : review.body;
       const readMoreBtnHtml = truncatedText
-        ? '<button class="read-more-btn" onclick="readMore(this)">Read more</button>'
+        ? '<button class="read-more-btn">Read more</button>'
         : "";
       return `
         <div class="review" id="rev-${review.id}">
@@ -173,6 +173,11 @@
     container.innerHTML = content;
     // Run slider
     widgetType === "slider" && runSlider();
+    document.addEventListener("click", (event) => {
+      if (event.target.classList.contains("read-more-btn")) {
+        readMore(event.target);
+      }
+    });
 
     // Functions in render review
     //
@@ -237,6 +242,7 @@
     }
 
     function readMore(btn) {
+      console.log(btn);
       const reviewBody = btn.parentElement.querySelector(".review-body");
       const reviewId = btn.parentElement.id.split("-")[1];
       const reviewFullText = reviews.find((r) => r.id === reviewId).body;
