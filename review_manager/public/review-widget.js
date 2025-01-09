@@ -136,7 +136,7 @@
       const truncatedText = truncateText(review.body, 150);
       const renderedText = truncatedText ? truncatedText : review.body;
       const readMoreBtnHtml = truncatedText
-        ? '<button class="read-more-btn">Read more</button>'
+        ? '<button class="rev-read-more-btn" style="padding: 0; border: none; background: none; cursor: pointer;">Read more</button>'
         : "";
       return `
         <div class="review" id="rev-${review.id}">
@@ -174,7 +174,7 @@
     // Run slider
     widgetType === "slider" && runSlider();
     document.addEventListener("click", (event) => {
-      if (event.target.classList.contains("read-more-btn")) {
+      if (event.target.classList.contains("rev-read-more-btn")) {
         readMore(event.target);
       }
     });
@@ -244,7 +244,7 @@
     function readMore(btn) {
       console.log(btn);
       const reviewBody = btn.parentElement.querySelector(".review-body");
-      const reviewId = btn.parentElement.id.split("-")[1];
+      const reviewId = Number(btn.parentElement.id.split("-")[1]);
       const reviewFullText = widgetData.widget.reviews.find(
         (r) => r.id === reviewId
       ).body;
