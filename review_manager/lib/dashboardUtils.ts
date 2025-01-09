@@ -35,7 +35,7 @@ export interface FetchedReview {
 }
 
 export interface Widget {
-  id?: number;
+  id: number;
   name: string;
   type: string;
   reviews: Review[] | null;
