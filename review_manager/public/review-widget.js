@@ -1,103 +1,103 @@
 (function () {
   const BASE_URL = "https://review-manager-cyan.vercel.app/";
-  const styleGrid = `
-  .review-widget {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.5em;
-    justify-content: center;
-    max-width: 1200px;
-    margin-inline: auto;
-  }
-  .review {
-    flex-grow: 1;
-    width: clamp(300px, 30%, 90%);
+  const styleGrid = `]
+    .review-widget {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5em;
+      justify-content: center;
+      max-width: 1200px;
+      margin-inline: auto;
+    }
+    .review {
+      flex-grow: 1;
+      width: clamp(300px, 30%, 90%);
 
-    position: relative;
-    padding: 1em;
-    border: 1px solid #80808080;
-    border-radius: 5px;
-  }
-  .review img {
-    width: 30px;
-    position: absolute;
-    right: 15px;
-  }
-  .review-name {
-    margin: 0;
-  }
-  .review-date {
-    opacity: 0.5;
-    margin-top: 8px;
-  }
-  .review-body {
-    font-style: italic;
-  }
-  `;
-
-  const styleSlider = `
-  .review-widget {
-    position: relative;
-    overflow: hidden;
-    width: 100%;
-    max-width: 800px;
-    margin: auto;
-  }
-
-  .slider {
-    display: flex;
-    gap: 20px;
-    transition: transform 0.5s ease-in-out;
-    overflow:scroll;
-    scrollbar-width: none;
-  }
-
-  .review {
-    position: relative;
-    min-width: 300px; /* Adjust this width as needed */
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    padding: 20px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    background: white;
-    text-align: center;
-  }
-
-  .control {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    background-color: rgba(0, 0, 0, 0.5);
-    color: white;
-    border: none;
-    cursor: pointer;
-    padding: 10px;
-    z-index: 10;
-  }
-
-  .prev {
-    left: 10px;
-  }
-
-  .next {
-    right: 10px;
-  }
-  .review img {
+      position: relative;
+      padding: 1em;
+      border: 1px solid #80808080;
+      border-radius: 5px;
+    }
+    .review img {
       width: 30px;
       position: absolute;
       right: 15px;
     }
-  .review-name {
-    margin: 0;
-  }
-  .review-date {
-    opacity: 0.5;
-    margin-top: 8px;
-  }
-  .review-body {
-    font-style: italic;
-  }  
-`;
+    .review-name {
+      margin: 0;
+    }
+    .review-date {
+      opacity: 0.5;
+      margin-top: 8px;
+    }
+    .review-body {
+      font-style: italic;
+    }
+  `;
+
+  const styleSlider = `
+    .review-widget {
+      position: relative;
+      overflow: hidden;
+      width: 100%;
+      max-width: 800px;
+      margin: auto;
+    }
+
+    .slider {
+      display: flex;
+      gap: 20px;
+      transition: transform 0.5s ease-in-out;
+      overflow:scroll;
+      scrollbar-width: none;
+    }
+
+    .review {
+      position: relative;
+      min-width: 300px; /* Adjust this width as needed */
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      padding: 20px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      background: white;
+      text-align: center;
+    }
+
+    .control {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background-color: rgba(0, 0, 0, 0.5);
+      color: white;
+      border: none;
+      cursor: pointer;
+      padding: 10px;
+      z-index: 10;
+    }
+
+    .prev {
+      left: 10px;
+    }
+
+    .next {
+      right: 10px;
+    }
+    .review img {
+        width: 30px;
+        position: absolute;
+        right: 15px;
+      }
+    .review-name {
+      margin: 0;
+    }
+    .review-date {
+      opacity: 0.5;
+      margin-top: 8px;
+    }
+    .review-body {
+      font-style: italic;
+    }  
+  `;
 
   function loadReviewWidget(widgetId) {
     // Create a container for the widget
@@ -128,19 +128,24 @@
       });
   }
 
-  function renderWidget(container, data) {
-    console.log(data);
-    const widgetType = data.widget.type;
+  function renderWidget(container, widgetData) {
+    console.log(widgetData);
+    const widgetType = widgetData.widget.type;
     // Create review blocks
-    const reviews = data.widget.reviews.map((review) => {
+    const reviews = widgetData.widget.reviews.map((review) => {
+      const truncatedText = truncateText(review.body, 150);
+      const renderedText = truncatedText ? truncatedText : review.body;
+      const readMoreBtnHtml = truncatedText
+        ? '<button class="read-more-btn" onclick="readMore(this)">Read more</button>'
+        : "";
       return `
-        <div class="review">
+        <div class="review" id="rev-${review.id}">
         <img src="${BASE_URL}img/google.png" alt="">
         <h3 class="review-name">${review.reviewedBy}</h3>
         <p class="review-date">${review.date}</p>
         <div class="review-rating">${review.stars}★</div>
-        <p class="review-body">${review.body}</p>
-        <button>Read more</button>
+        <p class="review-body">${renderedText}</p>
+        ${readMoreBtnHtml}
         </div>
       `;
     });
@@ -168,7 +173,7 @@
     container.innerHTML = content;
     // Run slider
     widgetType === "slider" && runSlider();
-    
+
     // Functions in render review
     //
 
@@ -219,10 +224,31 @@
       }, autoScrollInterval);
     }
 
-    // Truncate text
-    function truncateText(text, maxLength) {}
-  }
+    // Truncate text. Return null if too short to truncate
+    function truncateText(text, length) {
+      if (text.length > length) {
+        // Find the last space before maxLength
+        const lastSpace = text.lastIndexOf(" ", length);
+        if (lastSpace === -1) return text.slice(0, length) + "...";
+        return text.slice(0, lastSpace) + "...";
+      } else {
+        return null;
+      }
+    }
 
+    function readMore(btn) {
+      const reviewBody = btn.parentElement.querySelector(".review-body");
+      const reviewId = btn.parentElement.id.split("-")[1];
+      const reviewFullText = reviews.find((r) => r.id === reviewId).body;
+      const reviewTruncatedText = truncateText(reviewFullText, 150);
+      reviewBody.textContent =
+        reviewBody.textContent === reviewFullText
+          ? reviewTruncatedText
+          : reviewFullText;
+      btn.textContent =
+        btn.textContent === "Read more" ? "Read less" : "Read more";
+    }
+  }
   // Look for a script tag with data-widget-id attribute
   const widgetId = document.currentScript.getAttribute("data-widget-id");
 
@@ -231,5 +257,4 @@
   } else {
     console.error("Review widget error: No widget ID provided");
   }
-
 })();
