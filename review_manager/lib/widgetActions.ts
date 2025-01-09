@@ -120,7 +120,8 @@ export async function getPublicWidget(id: number) {
     .select(
       `id, 
         name,
-        type, 
+        type,
+        published, 
         grouped!left(
           reviews(id)
         )`
@@ -144,6 +145,7 @@ export async function getPublicWidget(id: number) {
     id: widgetData.id,
     name: widgetData.name,
     type: widgetData.type,
+    published: widgetData.published,
     reviews: widgetReviews,
   };
 
