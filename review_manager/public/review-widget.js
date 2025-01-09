@@ -166,54 +166,61 @@
     }
     document.head.appendChild(styles);
     container.innerHTML = content;
-    // Extra function for slider
+    // Run slider
     widgetType === "slider" && runSlider();
-  }
+    
+    // Functions in render review
+    //
 
-  function runSlider() {
-    const slider = document.getElementById("slider");
-    const sliderWidth = slider.offsetWidth; //To use later
-    let reviewWidth = document.querySelector(".review").offsetWidth;
-    const prev = document.getElementById("prev");
-    const next = document.getElementById("next");
+    // Slider function
+    function runSlider() {
+      const slider = document.getElementById("slider");
+      const sliderWidth = slider.offsetWidth; //To use later
+      let reviewWidth = document.querySelector(".review").offsetWidth;
+      const prev = document.getElementById("prev");
+      const next = document.getElementById("next");
 
-    let scrollAmount = 0;
-    const scrollStep = reviewWidth + 20; // Width of one review + gap
-    const autoScrollInterval = 8000;
-    let isDragging = false;
+      let scrollAmount = 0;
+      const scrollStep = reviewWidth + 20; // Width of one review + gap
+      const autoScrollInterval = 8000;
+      let isDragging = false;
 
-    slider.addEventListener("touchstart", () => (isDragging = true));
-    slider.addEventListener("touchend", () => {
-      isDragging = false;
-      snapScroll(0);
-    });
-    // Scroll to snap position - forward: 1 , backward: -1 or adjust in place: 0
-    function snapScroll(step) {
-      const scrollLeft = slider.scrollLeft;
-      const nearestIndex = Math.round(scrollLeft / scrollStep);
-      const snapPosition = (nearestIndex + step) * scrollStep;
-      if (snapPosition >= slider.scrollWidth) {
-        slider.scrollTo({ left: 0, behavior: "smooth" });
-      } else {
-        slider.scrollTo({ left: snapPosition, behavior: "smooth" });
+      slider.addEventListener("touchstart", () => (isDragging = true));
+      slider.addEventListener("touchend", () => {
+        isDragging = false;
+        snapScroll(0);
+      });
+      // Scroll to snap position - forward: 1 , backward: -1 or adjust in place: 0
+      function snapScroll(step) {
+        const scrollLeft = slider.scrollLeft;
+        const nearestIndex = Math.round(scrollLeft / scrollStep);
+        const snapPosition = (nearestIndex + step) * scrollStep;
+        if (snapPosition >= slider.scrollWidth) {
+          slider.scrollTo({ left: 0, behavior: "smooth" });
+        } else {
+          slider.scrollTo({ left: snapPosition, behavior: "smooth" });
+        }
       }
+
+      // Manual controls
+      next.addEventListener("click", () => {
+        snapScroll(1);
+      });
+      prev.addEventListener("click", () => {
+        snapScroll(-1);
+      });
+
+      // Automatic scroll
+      setInterval(() => {
+        if (scrollAmount >= slider.scrollWidth - slider.clientWidth) {
+          scrollAmount = 0; // Reset to the start
+        }
+        snapScroll(1);
+      }, autoScrollInterval);
     }
 
-    // Manual controls
-    next.addEventListener("click", () => {
-      snapScroll(1);
-    });
-    prev.addEventListener("click", () => {
-      snapScroll(-1);
-    });
-
-    // Automatic scroll
-    setInterval(() => {
-      if (scrollAmount >= slider.scrollWidth - slider.clientWidth) {
-        scrollAmount = 0; // Reset to the start
-      }
-      snapScroll(1);
-    }, autoScrollInterval);
+    // Truncate text
+    function truncateText(text, maxLength) {}
   }
 
   // Look for a script tag with data-widget-id attribute
@@ -224,4 +231,5 @@
   } else {
     console.error("Review widget error: No widget ID provided");
   }
+
 })();
