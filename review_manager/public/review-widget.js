@@ -245,7 +245,9 @@
       console.log(btn);
       const reviewBody = btn.parentElement.querySelector(".review-body");
       const reviewId = btn.parentElement.id.split("-")[1];
-      const reviewFullText = reviews.find((r) => r.id === reviewId).body;
+      const reviewFullText = widgetData.widget.reviews.find(
+        (r) => r.id === reviewId
+      ).body;
       const reviewTruncatedText = truncateText(reviewFullText, 150);
       reviewBody.textContent =
         reviewBody.textContent === reviewFullText
