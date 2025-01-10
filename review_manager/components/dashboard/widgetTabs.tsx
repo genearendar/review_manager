@@ -35,17 +35,5 @@ export default function WidgetTabs({
         </TabsContent>
       </UrlTabs>
     </>
-    // <Tabs defaultValue="Your widgets">
-    //   <TabsList>
-    //     <TabsTrigger value="Your widgets">Your widgets</TabsTrigger>
-    //     <TabsTrigger value="New widget">New widget</TabsTrigger>
-    //   </TabsList>
-    //   <TabsContent value="Your widgets">
-    //     <div className="flex flex-col gap-2 max-w-xl">{widgetElements}</div>
-    //   </TabsContent>
-    //   <TabsContent value="New widget">
-    //     <AddWidgetForm reviews={reviews} />
-    //   </TabsContent>
-    // </Tabs>
   );
 }

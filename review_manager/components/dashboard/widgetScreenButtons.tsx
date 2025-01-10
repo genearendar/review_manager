@@ -1,7 +1,12 @@
 import ActionButton from "./actionButton";
-import { publishWidget, unpublishWidget } from "@/lib/widgetActions";
+import {
+  publishWidget,
+  unpublishWidget,
+  deleteWidget,
+} from "@/lib/widgetActions";
 import Link from "next/link";
 import { Button } from "../ui/button";
+import { Trash2 } from "lucide-react";
 export default function WidgetScreenButtons({
   published,
   id,
@@ -12,13 +17,18 @@ export default function WidgetScreenButtons({
   return (
     <div className="widget-buttons mt-4">
       {!published ? (
-        <ActionButton
-          action={publishWidget}
-          args={id!}
-          className="px-4 py-2 rounded bg-green-500 hover:bg-green-600"
-        >
-          Publish widget
-        </ActionButton>
+        <div className="flex align-center justify-between">
+          <ActionButton
+            action={publishWidget}
+            args={id!}
+            className="px-4 py-2 rounded bg-green-500 hover:bg-green-600"
+          >
+            Publish widget
+          </ActionButton>
+          <ActionButton action={deleteWidget} args={id} className="py-2">
+            <Trash2 className="text-gray-600 hover:text-red-600" />
+          </ActionButton>
+        </div>
       ) : (
         <>
           <ActionButton
