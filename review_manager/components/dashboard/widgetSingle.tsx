@@ -6,7 +6,7 @@ import { deleteWidget } from "@/lib/widgetActions";
 import Link from "next/link";
 export default function WidgetSingle({ widget }: { widget: Widget }) {
   return (
-    <Link href={`?widget=${widget.id}`}>
+    <Link href={`widgets/${widget.id}`}>
       <div className="flex flex-col p-4 border-solid border-2 border-gray-200 hover:border-gray-400 rounded-md">
         <div className="flex justify-between">
           <div>
