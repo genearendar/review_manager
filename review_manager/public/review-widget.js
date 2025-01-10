@@ -136,14 +136,15 @@
       const truncatedText = truncateText(review.body, 150);
       const renderedText = truncatedText ? truncatedText : review.body;
       const readMoreBtnHtml = truncatedText
-        ? '<button class="rev-read-more-btn" style="padding: 0; border: none; background: none; cursor: pointer;">Read more</button>'
+        ? '<button class="review-read-btn" style="padding: 0; border: none; background: none; cursor: pointer;">Read more</button>'
         : "";
+      const starsContent = "★".repeat(review.stars);
       return `
         <div class="review" id="rev-${review.id}">
         <img src="${BASE_URL}img/google.png" alt="">
         <h3 class="review-name">${review.reviewedBy}</h3>
         <p class="review-date">${review.date}</p>
-        <div class="review-rating">${review.stars}★</div>
+        <div class="review-rating" style="color: #FFD700;">${starsContent}</div>
         <p class="review-body">${renderedText}</p>
         ${readMoreBtnHtml}
         </div>
@@ -174,7 +175,7 @@
     // Run slider
     widgetType === "slider" && runSlider();
     document.addEventListener("click", (event) => {
-      if (event.target.classList.contains("rev-read-more-btn")) {
+      if (event.target.classList.contains("review-read-btn")) {
         readMore(event.target);
       }
     });
