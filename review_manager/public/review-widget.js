@@ -136,7 +136,7 @@
       const truncatedText = truncateText(review.body, 150);
       const renderedText = truncatedText ? truncatedText : review.body;
       const readMoreBtnHtml = truncatedText
-        ? '<button class="review-read-btn" style="padding: 0; border: none; background: none; cursor: pointer;">Read more</button>'
+        ? '<button class="review-read-btn" style="text-decoration: underline; padding: 0; border: none; background: none; cursor: pointer;">Read more</button>'
         : "";
       const starsContent = "★".repeat(review.stars);
       return `
