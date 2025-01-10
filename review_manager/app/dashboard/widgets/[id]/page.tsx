@@ -4,8 +4,13 @@ import WidgetScreen from "@/components/dashboard/widgetScreen";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 
-export default async function WidgetId({ params }: { params: { id: string } }) {
-  const id = await params.id;
+export default async function WidgetId({
+  params,
+}: {
+  params: Promise<{ id: string }>;
+}) {
+  const resolvedParams = await params;
+  const id = resolvedParams.id;
   const widget = await getAllWidgets().then((widgets: Widget[]) =>
     widgets.find((widget) => widget.id === Number(id))
   );
