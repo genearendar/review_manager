@@ -11,8 +11,9 @@ const defaultUrl = process.env.VERCEL_URL
 
 export const metadata = {
   metadataBase: new URL(defaultUrl),
-  title: "Next.js and Supabase Starter Kit",
-  description: "The fastest way to build apps with Next.js and Supabase",
+  title: "Easy Review Widget for Your Website | RaveBoard",
+  description:
+    "Showcase your best customer reviews in minutes with RaveBoard. Our easy-to-use widget requires no coding and works on any website. Start building trust and driving sales today!",
 };
 
 export default function RootLayout({
