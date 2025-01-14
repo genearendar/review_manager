@@ -28,6 +28,10 @@ const config = {
           DEFAULT: "hsl(var(--primary))",
           foreground: "hsl(var(--primary-foreground))",
         },
+        primaryFade: {
+          DEFAULT: "hsl(var(--primary-fade))",
+          foreground: "hsl(var(--accent-foreground))",
+        },
         secondary: {
           DEFAULT: "hsl(var(--secondary))",
           foreground: "hsl(var(--secondary-foreground))",
