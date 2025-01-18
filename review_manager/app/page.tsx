@@ -53,7 +53,9 @@ export default async function Index() {
           </div>
         </section>
         <section className="pb-12">
-          <ReviewWidgetLoader widgetId="59"/>
+          <div className="container max-w-4xl">
+            <ReviewWidgetLoader widgetId="59" />
+          </div>
         </section>
         <section className="pb-12">
           <div className="container max-w-4xl">

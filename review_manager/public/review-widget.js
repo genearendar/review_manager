@@ -188,28 +188,40 @@
       const slider = document.getElementById("slider");
       const sliderWidth = slider.offsetWidth; //To use later
       let reviewWidth = document.querySelector(".review").offsetWidth;
+
       const prev = document.getElementById("prev");
       const next = document.getElementById("next");
 
       let scrollAmount = 0;
       const scrollStep = reviewWidth + 20; // Width of one review + gap
-      const autoScrollInterval = 8000;
-      let isDragging = false;
 
+      // Get total number of reviews and visible reviews
+      const visibleReviews = Math.floor(sliderWidth / scrollStep);
+      const maxScrollPosition = (totalReviews - visibleReviews) * scrollStep;
+      const autoScrollInterval = 8000;
+
+      // Touch events
+      let isDragging = false;
       slider.addEventListener("touchstart", () => (isDragging = true));
       slider.addEventListener("touchend", () => {
         isDragging = false;
         snapScroll(0);
       });
+
       // Scroll to snap position - forward: 1 , backward: -1 or adjust in place: 0
+      let resetScroll = false; // used in snapScroll fn
       function snapScroll(step) {
         const scrollLeft = slider.scrollLeft;
         const nearestIndex = Math.round(scrollLeft / scrollStep);
         const snapPosition = (nearestIndex + step) * scrollStep;
-        if (snapPosition >= slider.scrollWidth) {
+        if (resetScroll) {
           slider.scrollTo({ left: 0, behavior: "smooth" });
-        } else {
-          slider.scrollTo({ left: snapPosition, behavior: "smooth" });
+          resetScroll = false;
+          return;
+        }
+        slider.scrollTo({ left: snapPosition, behavior: "smooth" });
+        if (snapPosition >= maxScrollPosition) {
+          resetScroll = true;
         }
       }
 
@@ -223,9 +235,6 @@
 
       // Automatic scroll
       setInterval(() => {
-        if (scrollAmount >= slider.scrollWidth - slider.clientWidth) {
-          scrollAmount = 0; // Reset to the start
-        }
         snapScroll(1);
       }, autoScrollInterval);
     }
