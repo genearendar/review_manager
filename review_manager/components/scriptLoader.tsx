@@ -6,7 +6,7 @@ export default function ScriptLoader() {
   return (
     <div>
       <Script
-        src="https://review-manager-cyan.vercel.app/review-widget"
+        src="https://review-manager-cyan.vercel.app/review-widget.js"
         data-widget-id="59"
         strategy="lazyOnload"
       />
