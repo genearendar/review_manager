@@ -5,7 +5,7 @@ export default function ReviewWidgetLoader({ widgetId }: { widgetId: string }) {
   useEffect(() => {
     // Create script element
     const script = document.createElement("script");
-    script.src = "https://review-manager-cyan.vercel.app/review-widget";
+    script.src = "https://review-manager-cyan.vercel.app/review-widget.js";
     script.setAttribute("data-widget-id", widgetId);
 
     // Create a container div that the script will target
