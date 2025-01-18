@@ -196,6 +196,7 @@
       const scrollStep = reviewWidth + 20; // Width of one review + gap
 
       // Get total number of reviews and visible reviews
+      const totalReviews = slider.children.length;
       const visibleReviews = Math.floor(sliderWidth / scrollStep);
       const maxScrollPosition = (totalReviews - visibleReviews) * scrollStep;
       const autoScrollInterval = 8000;
