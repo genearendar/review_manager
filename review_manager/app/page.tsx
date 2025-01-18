@@ -5,31 +5,28 @@ export default async function Index() {
     <>
       <main>
         <section className="py-24">
-          <div className="container">
-            <h1 className="text-5xl font-bold mb-8 text-primary">
+          <div className="container max-w-4xl">
+            <h1 className="text-5xl font-bold mb-8 text-primary ">
               Small Business Owners: Are You Leaving Money on the Table?
             </h1>
             <h2 className="text-3xl font-bold mb-4">
-              <span className="text-accent">STOP</span> Letting Your Competitors
+              <span className="text-accent">STOP</span> Letting Your Competitors{" "}
               <span className="text-accent">STEAL</span> Your Customers! Your
-              Raving Fans Hold the Key…{" "}
-              <span className="text-accent">Are You Using It?</span>
+              Raving Fans Hold the Key… Are You Using It?
             </h2>
-            <p className="mb-4 text-xl">
+          </div>
+        </section>
+        <section className="pb-12">
+          <div className="container max-w-4xl">
+            <p className="mb-4 text-lg">
               <span className="font-bold">Imagine this:</span> You've got
               customers raving about your business… but those powerful
-              testimonials are just sitting there, doing nothing. Every day you
-              fail to showcase those glowing reviews on your website, you're
-              missing out on a flood of potential customers and watching your
-              competitors reap the rewards. It's time to unleash the untapped
-              power of your customer feedback.
+              testimonials are just sitting there, doing nothing.
             </p>
-            <p className="text-xl">
-              You’ve got customers saying amazing things about you—that’s
-              fantastic!{" "}
-              <span className="font-bold">
-                But here’s the cold, hard truth:
-              </span>{" "}
+            <h2 className="text-3xl font-bold mb-4 text-accent text-center underline">
+              Here’s the cold, hard truth:
+            </h2>
+            <p className="text-lg font-bold italic text-center">
               If those testimonials aren't front and center on your website,
               you're losing out on crucial trust and credibility. Potential
               customers are searching for social proof, and if they don't find
@@ -39,8 +36,8 @@ export default async function Index() {
           </div>
         </section>
         <section className="pb-12">
-          <div className="container">
-            <h2 className="text-3xl font-bold mb-4 text-primary">
+          <div className="container max-w-4xl">
+            <h2 className="text-3xl font-bold mb-4 text-primary text-center">
               Unleash the Power of Your Reviews with RaveBoard
             </h2>
             <p className="mb-4">
@@ -54,8 +51,8 @@ export default async function Index() {
           </div>
         </section>
         <section className="pb-12">
-          <div className="container">
-            <h2 className="text-3xl font-bold mb-4 text-primary">
+          <div className="container max-w-4xl">
+            <h2 className="text-3xl font-bold mb-4 text-primary text-center">
               Get Your Reviews Working for You in Just 3 Steps:
             </h2>
             <ol className="list-decimal pl-6">
@@ -78,8 +75,8 @@ export default async function Index() {
           </div>
         </section>
         <section className="pb-12">
-          <div className="container">
-            <h2 className="text-3xl font-bold mb-4 text-primary">
+          <div className="container max-w-4xl">
+            <h2 className="text-3xl font-bold mb-4 text-primary text-center">
               Here's Why Smart Business Owners Choose RaveBoard to Dominate
               Their Market:
             </h2>
@@ -108,17 +105,19 @@ export default async function Index() {
         </section>
 
         <section className="pb-12">
-          <div className="container">
-            <h2 className="text-3xl font-bold mb-4 text-primary">
+          <div className="container max-w-4xl">
+            <h2 className="text-3xl font-bold mb-4 text-primary text-center">
               Ready to Stop Losing Customers and Start Showcasing Your Raving
               Fans?
             </h2>
-            <p className="mb-6">
+            <p className="mb-6 text-center text-lg">
               Start showcasing your rave reviews today—it’s free to get started!
             </p>
-            <Button asChild>
-              <Link href="/sign-up">Showcase my reviews</Link>
-            </Button>
+            <div className="flex justify-center">
+              <Button asChild>
+                <Link href="/sign-up">Showcase my reviews</Link>
+              </Button>
+            </div>
           </div>
         </section>
       </main>
