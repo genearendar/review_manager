@@ -15,17 +15,17 @@ import {
 const items = [
   {
     title: "Reviews",
-    url: "reviews",
+    url: "/dashboard/reviews",
     icon: Star,
   },
   {
     title: "Widgets",
-    url: "widgets",
+    url: "/dashboard/widgets",
     icon: MessageSquareCode,
   },
   {
     title: "Account",
-    url: "account",
+    url: "/dashboard/account",
     icon: User,
   },
 ];
