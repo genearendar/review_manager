@@ -1,16 +1,30 @@
 "use client";
+import { useEffect } from "react";
 
-import Script from "next/script";
+export default function ReviewWidgetLoader({ widgetId }: { widgetId: string }) {
+  useEffect(() => {
+    // Create script element
+    const script = document.createElement("script");
+    script.src = "https://review-manager-cyan.vercel.app/review-widget";
+    script.setAttribute("data-widget-id", widgetId);
 
-export default function ScriptLoader() {
-  return (
-    <div>
-      <Script
-        src="https://review-manager-cyan.vercel.app/review-widget.js"
-        data-widget-id="59"
-        strategy="lazyOnload"
-      />
-      {/* rest of your component */}
-    </div>
-  );
+    // Create a container div that the script will target
+    const container = document.createElement("div");
+    container.id = `review-widget-container-${widgetId}`;
+
+    // Insert both into the DOM
+    const targetElement = document.getElementById("review-widget-mount");
+    if (targetElement) {
+      targetElement.appendChild(container);
+      targetElement.appendChild(script);
+    }
+
+    // Cleanup on unmount
+    return () => {
+      script.remove();
+      container?.remove();
+    };
+  }, [widgetId]);
+
+  return <div id="review-widget-mount" />;
 }

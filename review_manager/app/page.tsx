@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import Script from "next/script";
-import ScriptLoader from "@/components/scriptLoader";
+import ReviewWidgetLoader from "@/components/scriptLoader";
 export default async function Index() {
   return (
     <>
@@ -53,7 +53,7 @@ export default async function Index() {
           </div>
         </section>
         <section className="pb-12">
-          <ScriptLoader />
+          <ReviewWidgetLoader widgetId="59"/>
         </section>
         <section className="pb-12">
           <div className="container max-w-4xl">
