@@ -3,6 +3,8 @@ import { getAllWidgets } from "@/lib/widgetActions";
 import WidgetScreen from "@/components/dashboard/widgetScreen";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
+import { Suspense } from "react";
+import { LoadingFallback } from "@/components/dashboard/loader";
 
 export default async function WidgetId({
   params,
@@ -15,7 +17,9 @@ export default async function WidgetId({
     widgets.find((widget) => widget.id === Number(id))
   );
   return widget ? (
-    <WidgetScreen widget={widget as Widget} />
+    <Suspense fallback={<LoadingFallback />}>
+      <WidgetScreen widget={widget as Widget} />
+    </Suspense>
   ) : (
     <div>
       <h2 className="text-2xl mt-4 mb-4">Sorry, this widget does not exist</h2>
