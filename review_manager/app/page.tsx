@@ -1,23 +1,12 @@
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
-import Script from "next/script";
 import ReviewWidgetLoader from "@/components/scriptLoader";
+import AnimatedGradientHero from "@/components/animated-hero";
 export default async function Index() {
   return (
     <>
       <main>
-        <section className="py-24">
-          <div className="container max-w-4xl">
-            <h1 className="text-5xl font-bold mb-8 text-primary ">
-              Small Business Owners: Are You Leaving Money on the Table?
-            </h1>
-            <h2 className="text-3xl font-bold mb-4">
-              <span className="text-accent">STOP</span> Letting Your Competitors{" "}
-              <span className="text-accent">STEAL</span> Your Customers! Your
-              Raving Fans Hold the Key… Are You Using It?
-            </h2>
-          </div>
-        </section>
+        <AnimatedGradientHero />
         <section className="pb-12">
           <div className="container max-w-4xl">
             <p className="mb-4 text-lg">
@@ -28,7 +17,7 @@ export default async function Index() {
             <h2 className="text-3xl font-bold mb-4 text-accent text-center underline">
               Here’s the cold, hard truth:
             </h2>
-            <p className="text-lg font-bold italic text-center">
+            <p className="text-lg font-bold italic text-center text-slate-800">
               If those testimonials aren't front and center on your website,
               you're losing out on crucial trust and credibility. Potential
               customers are searching for social proof, and if they don't find
@@ -48,7 +37,7 @@ export default async function Index() {
               No hassle. Just simple, powerful results. With just a few clicks,
               you can create a stunning, mobile-friendly review widget that
               works on any website, giving your happy customers the spotlight
-              they deserve.
+              they deserve. Just like we did right here:
             </p>
           </div>
         </section>

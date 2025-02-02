@@ -76,11 +76,28 @@
   }
 }
 
-/* @layer base {
-  * {
-    @apply border-border;
+.bg-radial-blue {
+  background: radial-gradient(
+    circle at center,
+    #ffffff 0%,
+    #bfd9ff 70%,
+    #8dbbff 100%
+  );
+}
+
+@keyframes gradient {
+  0% {
+    background-position: 0% 50%;
   }
-  body {
-    @apply bg-background text-foreground;
+  50% {
+    background-position: 100% 50%;
   }
-} */
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.animate-gradient {
+  background-size: 200% 200%;
+  animation: gradient 7s ease infinite;
+}
