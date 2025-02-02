@@ -1,8 +1,9 @@
 import { getAllReviews, addReview } from "@/lib/reviewActions";
 import { Review } from "@/lib/dashboardUtils";
 import { getUserData } from "@/lib/userActions";
-import ReviewForm from "@/components/dashboard/reviewForm";
 import ReviewsContainer from "@/components/dashboard/reviewsContainer";
+import { Suspense } from "react";
+import { LoadingFallback } from "@/components/dashboard/loader";
 
 export default async function Reviews() {
   const user = await getUserData();
@@ -10,8 +11,10 @@ export default async function Reviews() {
 
   return (
     <>
-      <h2 className="text-lg mb-4">Hello {user[0].email}</h2>
-      <ReviewsContainer initialReviews={initialReviews} />
+      <Suspense fallback={<LoadingFallback />}>
+        <h2 className="text-lg mb-4">Hello {user[0].email}</h2>
+        <ReviewsContainer initialReviews={initialReviews} />
+      </Suspense>
     </>
   );
 }
