@@ -3,6 +3,8 @@ import Header from "@/components/header";
 import Footer from "@/components/footer";
 import { GeistSans } from "geist/font/sans";
 import { ThemeProvider } from "next-themes";
+import { Suspense } from "react";
+import { LoadingFallback } from "@/components/dashboard/loader";
 import "./globals.css";
 
 const defaultUrl = process.env.VERCEL_URL
@@ -24,16 +26,18 @@ export default function RootLayout({
   return (
     <html lang="en" className={GeistSans.className} suppressHydrationWarning>
       <body className="bg-background text-foreground">
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="system"
-          enableSystem
-          disableTransitionOnChange
-        >
-          <Header />
-          {children}
-          <Footer />
-        </ThemeProvider>
+        <Suspense fallback={<LoadingFallback />}>
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="system"
+            enableSystem
+            disableTransitionOnChange
+          >
+            <Header />
+            {children}
+            <Footer />
+          </ThemeProvider>
+        </Suspense>
       </body>
     </html>
   );
