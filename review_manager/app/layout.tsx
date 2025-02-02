@@ -26,7 +26,6 @@ export default function RootLayout({
   return (
     <html lang="en" className={GeistSans.className} suppressHydrationWarning>
       <body className="bg-background text-foreground">
-        <Suspense fallback={<LoadingFallback />}>
           <ThemeProvider
             attribute="class"
             defaultTheme="system"
@@ -37,7 +36,6 @@ export default function RootLayout({
             {children}
             <Footer />
           </ThemeProvider>
-        </Suspense>
       </body>
     </html>
   );
